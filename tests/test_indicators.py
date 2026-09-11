@@ -19,7 +19,7 @@ from cac40_watch.indicators import (
     compute_beta,
     horizon_bucket,
 )
-from cac40_watch.scoring import _linear_fraction, compute_opportunity, evaluate
+from cac40_watch.scoring import _linear_fraction, blended_reference_pe, compute_opportunity, evaluate
 from cac40_watch import config as cfg
 from cac40_watch import history as history_module
 
@@ -100,6 +100,24 @@ def test_volume_signal_insufficient_data():
 
 
 # --- PER ------------------------------------------------------------------------------
+
+
+def test_blended_reference_pe_weights_by_sample_size():
+    # Grand échantillon sectoriel : la référence est proche de la médiane du secteur.
+    ref_large = blended_reference_pe(sector_median_pe=10.0, sector_sample_size=20, global_median_pe=20.0, k=4.0)
+    assert ref_large == pytest.approx(10.0 * 20 / 24 + 20.0 * 4 / 24)
+    assert ref_large < 12.0
+
+    # Petit échantillon : la référence reste proche de la médiane globale.
+    ref_small = blended_reference_pe(sector_median_pe=10.0, sector_sample_size=1, global_median_pe=20.0, k=4.0)
+    assert ref_small == pytest.approx(10.0 * 1 / 5 + 20.0 * 4 / 5)
+    assert ref_small > 17.0
+
+
+def test_blended_reference_pe_handles_missing_data():
+    assert blended_reference_pe(None, 0, 20.0, 4.0) == pytest.approx(20.0)
+    assert blended_reference_pe(10.0, 5, None, 4.0) == pytest.approx(10.0)
+    assert blended_reference_pe(None, 0, None, 4.0) is None
 
 
 def test_valuation_ratio():
@@ -224,7 +242,7 @@ def test_compute_opportunity_end_to_end():
 
     opp = compute_opportunity(
         "TEST.PA", "Test SA", df, pe=10, reference_median_pe=20, sector_name="Test",
-        sector_is_fallback=False, index_df=None, cfg=cfg,
+        sector_sample_size=6, index_df=None, cfg=cfg,
     )
 
     assert opp is not None
@@ -242,7 +260,7 @@ def test_evaluate_none_below_threshold():
 
     result = evaluate(
         "TEST.PA", "Test SA", df, pe=None, reference_median_pe=None, sector_name="inconnu",
-        sector_is_fallback=True, index_df=None, cfg=cfg,
+        sector_sample_size=0, index_df=None, cfg=cfg,
     )
     assert result is None
 

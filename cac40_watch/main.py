@@ -15,6 +15,7 @@ from zoneinfo import ZoneInfo
 from . import config as cfg
 from .tickers import CAC40_TICKERS
 from .data import fetch_history, fetch_fundamentals, fetch_index_history
+from . import scoring as scoring_module
 from .scoring import evaluate
 from .notify import send_notification
 from .state import load_state, save_state, should_alert, record_alert
@@ -55,7 +56,7 @@ def _collect_market_data():
 
 
 def _compute_reference_medians(collected):
-    """Calcule la médiane du PER par secteur (si assez de valeurs) et une médiane globale de repli."""
+    """Calcule la médiane du PER par secteur et une médiane globale (CAC 40 entier)."""
     sector_pes = defaultdict(list)
     global_pes = []
     for item in collected.values():
@@ -65,18 +66,17 @@ def _compute_reference_medians(collected):
             if item["sector"]:
                 sector_pes[item["sector"]].append(pe)
 
-    sector_median = {
-        sector: statistics.median(pes) for sector, pes in sector_pes.items() if len(pes) >= cfg.MIN_SECTOR_SAMPLE
-    }
+    sector_median = {sector: statistics.median(pes) for sector, pes in sector_pes.items()}
+    sector_count = {sector: len(pes) for sector, pes in sector_pes.items()}
     global_median = statistics.median(global_pes) if global_pes else None
-    return sector_median, global_median
+    return sector_median, sector_count, global_median
 
 
-def _reference_for(item, sector_median, global_median):
+def _reference_for(item, sector_median, sector_count, global_median):
     sector = item["sector"]
-    if sector and sector in sector_median:
-        return sector_median[sector], sector, False
-    return global_median, (sector or "inconnu"), True
+    n = sector_count.get(sector, 0) if sector else 0
+    reference = scoring_module.blended_reference_pe(sector_median.get(sector), n, global_median, cfg.PER_SHRINKAGE_K)
+    return reference, (sector or "inconnu"), n
 
 
 def _process_followups(collected, hist, today=None):
@@ -116,7 +116,7 @@ def main(argv=None):
         return
 
     collected, index_df = _collect_market_data()
-    sector_median, global_median = _compute_reference_medians(collected)
+    sector_median, sector_count, global_median = _compute_reference_medians(collected)
 
     alert_state = load_state(cfg.STATE_FILE)
     alert_hist = load_state(cfg.ALERT_HISTORY_FILE)
@@ -124,9 +124,9 @@ def main(argv=None):
     today = date.today()
 
     for ticker, item in collected.items():
-        reference_median_pe, sector_name, sector_is_fallback = _reference_for(item, sector_median, global_median)
+        reference_median_pe, sector_name, sector_sample_size = _reference_for(item, sector_median, sector_count, global_median)
         opportunity = evaluate(
-            ticker, item["name"], item["df"], item["pe"], reference_median_pe, sector_name, sector_is_fallback,
+            ticker, item["name"], item["df"], item["pe"], reference_median_pe, sector_name, sector_sample_size,
             index_df, cfg,
         )
         if not opportunity:

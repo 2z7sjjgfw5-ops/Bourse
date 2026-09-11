@@ -16,7 +16,7 @@ from collections import defaultdict
 from . import config as cfg
 from .tickers import CAC40_TICKERS
 from .data import fetch_history, fetch_fundamentals, fetch_index_history
-from .scoring import compute_opportunity
+from .scoring import compute_opportunity, blended_reference_pe
 
 LOOKBACK_DAYS = 90  # nombre de jours (les plus récents) rejoués pour la calibration
 CANDIDATE_THRESHOLDS = [3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0]
@@ -59,14 +59,16 @@ def _reference_medians_for_day(collected, day_idx):
             global_pes.append(pe)
             if item["sector"]:
                 sector_pes[item["sector"]].append(pe)
-    sector_median = {s: statistics.median(p) for s, p in sector_pes.items() if len(p) >= cfg.MIN_SECTOR_SAMPLE}
+    sector_median = {s: statistics.median(p) for s, p in sector_pes.items()}
+    sector_count = {s: len(p) for s, p in sector_pes.items()}
     global_median = statistics.median(global_pes) if global_pes else None
-    return sector_median, global_median
+    return sector_median, sector_count, global_median
 
 
 def _report_sector_coverage(collected):
-    """Affiche la couverture sectorielle réelle (nb de valeurs comparables par secteur),
-    pour vérifier honnêtement si la comparaison au secteur est statistiquement exploitable."""
+    """Affiche la couverture sectorielle réelle et le poids qu'elle obtient dans la
+    référence pondérée (rétrécissement statistique, voir config.PER_SHRINKAGE_K),
+    pour vérifier honnêtement si la comparaison au secteur pèse effectivement quelque chose."""
     sector_pes = defaultdict(list)
     no_sector = []
     no_pe = []
@@ -79,10 +81,11 @@ def _report_sector_coverage(collected):
         else:
             no_pe.append(ticker)
 
-    print(f"\nCouverture sectorielle ({len(collected)} valeurs au total) :")
+    print(f"\nCouverture sectorielle ({len(collected)} valeurs au total, k={cfg.PER_SHRINKAGE_K}) :")
     for sector, members in sorted(sector_pes.items(), key=lambda kv: -len(kv[1])):
-        usable = "OK (médiane sectorielle utilisable)" if len(members) >= cfg.MIN_SECTOR_SAMPLE else "insuffisant -> repli sur le CAC 40 entier"
-        print(f"  {sector:<30} {len(members):>2} valeur(s) avec PER valide -> {usable}")
+        n = len(members)
+        weight_pct = 100 * n / (n + cfg.PER_SHRINKAGE_K)
+        print(f"  {sector:<30} {n:>2} valeur(s) avec PER valide -> poids du secteur dans la référence : {weight_pct:.0f}%")
     if no_sector:
         print(f"  Secteur inconnu (non fourni par Yahoo Finance) : {', '.join(no_sector)}")
     if no_pe:
@@ -105,20 +108,19 @@ def run():
     start = max(cfg.MACD_SLOW + cfg.MACD_SIGNAL + 5, min_len - LOOKBACK_DAYS)
 
     for day_idx in range(start, min_len):
-        sector_median, global_median = _reference_medians_for_day(collected, day_idx)
+        sector_median, sector_count, global_median = _reference_medians_for_day(collected, day_idx)
         for ticker, item in collected.items():
             df_slice = item["df"].iloc[: day_idx + 1]
             if len(df_slice) < 60:
                 continue
             sector = item["sector"]
-            if sector and sector in sector_median:
-                reference_median_pe, sector_name, sector_is_fallback = sector_median[sector], sector, False
-            else:
-                reference_median_pe, sector_name, sector_is_fallback = global_median, sector or "inconnu", True
+            n = sector_count.get(sector, 0) if sector else 0
+            reference_median_pe = blended_reference_pe(sector_median.get(sector), n, global_median, cfg.PER_SHRINKAGE_K)
+            sector_name = sector or "inconnu"
 
             opp = compute_opportunity(
                 ticker, item["name"], df_slice, item["pe"], reference_median_pe, sector_name,
-                sector_is_fallback, index_df, cfg,
+                n, index_df, cfg,
             )
             if opp is None:
                 continue

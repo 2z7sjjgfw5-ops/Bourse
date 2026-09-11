@@ -30,6 +30,17 @@ def _linear_fraction(value, full_credit_value, zero_credit_value):
     return max(0.0, min(1.0, fraction))
 
 
+def blended_reference_pe(sector_median_pe, sector_sample_size, global_median_pe, k):
+    """Moyenne pondérée entre la médiane du secteur et celle de tout le CAC 40 :
+    le poids du secteur croît avec son nombre de valeurs comparables (voir
+    config.PER_SHRINKAGE_K). Jamais de bascule binaire "secteur ou repli"."""
+    if sector_median_pe is None or sector_sample_size <= 0:
+        return global_median_pe
+    if global_median_pe is None:
+        return sector_median_pe
+    return (sector_sample_size * sector_median_pe + k * global_median_pe) / (sector_sample_size + k)
+
+
 @dataclass
 class Opportunity:
     ticker: str
@@ -47,13 +58,13 @@ class Opportunity:
     pe: float
     reference_median_pe: float
     sector_name: str
-    sector_is_fallback: bool
+    sector_sample_size: int
     beta: float
     scores: dict = field(default_factory=dict)  # {"support":..,"macd":..,"rsi":..,"volume":..,"per":..}
     total_score: float = 0.0
 
 
-def compute_opportunity(ticker, name, df, pe, reference_median_pe, sector_name, sector_is_fallback, index_df, cfg):
+def compute_opportunity(ticker, name, df, pe, reference_median_pe, sector_name, sector_sample_size, index_df, cfg):
     """Calcule le score complet d'une valeur, indépendamment du seuil de déclenchement.
 
     Retourne None uniquement si aucun support/résistance exploitable n'a pu être
@@ -139,7 +150,7 @@ def compute_opportunity(ticker, name, df, pe, reference_median_pe, sector_name, 
         pe=pe,
         reference_median_pe=reference_median_pe,
         sector_name=sector_name,
-        sector_is_fallback=sector_is_fallback,
+        sector_sample_size=sector_sample_size,
         beta=beta,
         scores={
             "support": support_score,
@@ -152,12 +163,12 @@ def compute_opportunity(ticker, name, df, pe, reference_median_pe, sector_name, 
     )
 
 
-def evaluate(ticker, name, df, pe, reference_median_pe, sector_name, sector_is_fallback, index_df, cfg):
+def evaluate(ticker, name, df, pe, reference_median_pe, sector_name, sector_sample_size, index_df, cfg):
     """Comme compute_opportunity, mais retourne None si le score est sous le seuil
     de déclenchement — c'est cette version que main.py utilise pour décider
     d'envoyer une alerte ou non."""
     opportunity = compute_opportunity(
-        ticker, name, df, pe, reference_median_pe, sector_name, sector_is_fallback, index_df, cfg
+        ticker, name, df, pe, reference_median_pe, sector_name, sector_sample_size, index_df, cfg
     )
     if opportunity is None or opportunity.total_score < cfg.SCORE_THRESHOLD:
         return None

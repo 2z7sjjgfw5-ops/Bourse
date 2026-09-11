@@ -66,12 +66,11 @@ def format_message(opp):
         lines.append("Volume du jour : non disponible")
 
     if opp.pe and opp.reference_median_pe:
-        if opp.sector_is_fallback:
-            lines.append(
-                f"PER : {opp.pe:.1f} (secteur trop restreint, comparé au CAC 40 entier : {opp.reference_median_pe:.1f})"
-            )
-        else:
-            lines.append(f"PER : {opp.pe:.1f} (secteur {opp.sector_name}, médiane : {opp.reference_median_pe:.1f})")
+        n = opp.sector_sample_size
+        peers = "valeur comparable" if n == 1 else "valeurs comparables"
+        lines.append(
+            f"PER : {opp.pe:.1f} (secteur {opp.sector_name} : {n} {peers}, référence pondérée : {opp.reference_median_pe:.1f})"
+        )
     else:
         lines.append("PER : non disponible")
 

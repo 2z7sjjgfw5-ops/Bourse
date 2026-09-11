@@ -78,15 +78,24 @@ VOLUME_ZERO_CREDIT_RATIO = 1.0
 
 # --- Signal 5 : PER comparé au secteur ---------------------------------------
 
-# Ratio PER de la valeur / PER médian de son secteur : à ce ratio ou en
+# Ratio PER de la valeur / PER médian de référence : à ce ratio ou en
 # dessous, note maximale (forte décote) ; à 1.0 (valorisation dans la
-# moyenne du secteur) ou au-dessus, note nulle.
+# moyenne de référence) ou au-dessus, note nulle.
 PER_FULL_CREDIT_RATIO = 0.5
 PER_ZERO_CREDIT_RATIO = 1.0
-# Nombre minimum de valeurs comparables dans un secteur pour que la médiane
-# sectorielle soit jugée statistiquement utilisable ; en dessous, on bascule
-# sur la médiane de tout le CAC 40 et l'alerte le signale explicitement.
-MIN_SECTOR_SAMPLE = 4
+
+# La référence utilisée n'est jamais un simple "secteur ou repli" binaire :
+# c'est une moyenne pondérée entre la médiane du secteur et la médiane de
+# tout le CAC 40, où le poids du secteur croît avec son nombre de valeurs
+# comparables (n_secteur) :
+#
+#   référence = (n_secteur * médiane_secteur + PER_SHRINKAGE_K * médiane_CAC40)
+#               / (n_secteur + PER_SHRINKAGE_K)
+#
+# Avec PER_SHRINKAGE_K = 4 : un secteur à 10 valeurs compte presque
+# uniquement sur sa propre médiane, un secteur à 1-2 valeurs reste proche de
+# la médiane du CAC 40 entier, sans bascule brutale à un seuil arbitraire.
+PER_SHRINKAGE_K = 4.0
 
 # --- Pondération et score total (sur 10) -------------------------------------
 
