@@ -1,0 +1,53 @@
+name: Veille CAC 40
+
+on:
+  schedule:
+    # Toutes les 30 minutes, du lundi au vendredi, entre 7h00 et 16h30 UTC.
+    # Cette plage couvre les heures d'ouverture d'Euronext Paris (9h00-17h30
+    # heure de Paris) été comme hiver ; le script vérifie en plus l'heure
+    # locale de Paris et ne fait rien en dehors des horaires de marché.
+    - cron: "*/30 7-16 * * 1-5"
+  workflow_dispatch: {}   # permet de lancer une exécution manuelle depuis l'onglet "Actions"
+
+permissions:
+  contents: write   # nécessaire pour committer le fichier d'état des alertes
+
+concurrency:
+  group: cac40-monitor
+  cancel-in-progress: false
+
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupération du dépôt
+        uses: actions/checkout@v4
+
+      - name: Installation de Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installation des dépendances
+        run: pip install -r requirements.txt
+
+      - name: Analyse des valeurs du CAC 40 et envoi des alertes
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          PUSHOVER_USER_KEY: ${{ secrets.PUSHOVER_USER_KEY }}
+          PUSHOVER_APP_TOKEN: ${{ secrets.PUSHOVER_APP_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m cac40_watch.main
+
+      - name: Sauvegarde de l'historique des alertes
+        run: |
+          if [ -n "$(git status --porcelain state/)" ]; then
+            git config user.name "cac40-monitor-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add state/
+            git commit -m "Mise à jour de l'historique des alertes"
+            git push
+          else
+            echo "Aucun changement d'état à sauvegarder."
+          fi
