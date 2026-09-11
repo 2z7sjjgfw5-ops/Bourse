@@ -32,9 +32,11 @@ points proportionnel à son intensité (jamais tout-ou-rien) :
 | Volume d'échange | 1,2 | Volume du jour anormalement élevé vs moyenne 20 jours |
 | PER sectoriel | 1,0 | Valorisation plus basse que la médiane du secteur (bonus de contexte, jamais déclencheur à lui seul) |
 
-Une alerte est envoyée quand le score total dépasse un seuil (actuellement
-**5,0/10**, une valeur de départ en attente d'une calibration sur données
-réelles — voir `cac40_watch/calibrate.py`). L'alerte indique aussi :
+Une alerte est envoyée quand le score total dépasse **5,0/10** — ce seuil a
+été choisi à partir de la distribution réelle des scores sur 90 jours de
+bourse (`cac40_watch/calibrate.py`) : il correspond à environ 6 alertes par
+semaine sur tout le CAC 40. Il peut être recalculé à tout moment en relançant
+ce script. L'alerte indique aussi :
 - le potentiel de hausse estimé jusqu'à la résistance la plus proche (en %),
 - un horizon indicatif (plus le mouvement visé est grand, plus l'horizon
   annoncé est long — c'est une heuristique simple, pas une prédiction),

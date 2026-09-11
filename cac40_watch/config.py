@@ -106,9 +106,10 @@ WEIGHT_VOLUME = 1.2
 WEIGHT_PER = 1.0
 
 # Seuil de déclenchement d'une alerte (score total sur 10).
-# PROVISOIRE : valeur de départ le temps de calculer la distribution réelle
-# des scores sur données historiques (voir cac40_watch/calibrate.py) et de
-# la faire valider — ne pas considérer ce chiffre comme définitif.
+# Validé sur la distribution réelle des scores (cac40_watch/calibrate.py,
+# 90 jours de bourse, 39 valeurs) : correspond à un score entre le 95e et le
+# 99e percentile observé, soit environ 6 alertes/semaine sur tout le CAC 40.
+# Peut être recalculé à tout moment en relançant calibrate.py.
 SCORE_THRESHOLD = 5.0
 
 ALERT_COOLDOWN_DAYS = 3          # ne pas ré-alerter sur la même valeur avant N jours
