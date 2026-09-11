@@ -1,5 +1,6 @@
 name: Veille CAC 40
 
+# Mis en place le 11/09/2026.
 on:
   schedule:
     # Toutes les 30 minutes, du lundi au vendredi, entre 7h00 et 16h30 UTC.
