@@ -1,8 +1,13 @@
-"""Calcul des indicateurs techniques : support/résistance, volume, valorisation.
+"""Calcul des indicateurs techniques bruts : support/résistance (multi-fenêtres),
+volume, PER, RSI, MACD, bêta.
+
+Ce module renvoie des valeurs brutes (niveaux de prix, ratios, RSI, MACD...).
+La conversion en points de score pondérés se fait dans scoring.py.
 
 Ces fonctions n'ont volontairement aucune dépendance exotique (pas de
 scipy/ta-lib) : elles restent lisibles et faciles à auditer pour quelqu'un
-qui n'est pas développeur.
+qui n'est pas développeur. Seul le calcul du bêta s'appuie sur pandas (déjà
+une dépendance du projet), car il a besoin d'aligner deux séries par date.
 """
 
 
@@ -41,7 +46,8 @@ def _cluster_levels(levels, cluster_pct):
 
 
 def find_support_resistance(df, current_price, order=3, cluster_pct=0.015):
-    """Cherche le support le plus proche sous le prix et la résistance la plus proche au-dessus.
+    """Cherche le support le plus proche sous le prix et la résistance la plus proche au-dessus,
+    pour une seule fenêtre de détection (voir find_multi_window_levels pour la version combinée).
 
     Retourne {"support": float|None, "resistance": float|None} ou None si
     l'historique est trop court pour être analysé.
@@ -70,8 +76,56 @@ def find_support_resistance(df, current_price, order=3, cluster_pct=0.015):
     return {"support": support, "resistance": resistance}
 
 
-def volume_signal(df, lookback=20, threshold=1.8):
-    """Détecte un volume d'échange anormalement élevé sur la dernière séance."""
+def find_multi_window_levels(df, current_price, windows, cluster_pct, confirm_cluster_pct):
+    """Combine plusieurs fenêtres de détection (courte/moyenne/longue) pour un support
+    et une résistance plus robustes.
+
+    Pour chaque fenêtre, on calcule le support/résistance "single-window" le plus proche
+    du prix. Les niveaux obtenus par les différentes fenêtres sont ensuite regroupés :
+    plus un niveau est retrouvé par un grand nombre de fenêtres différentes, plus il est
+    considéré comme confirmé.
+
+    Retourne None si aucune fenêtre n'a rien trouvé, sinon un dict :
+        {
+          "support": {"level": float, "confirmations": int, "total_windows": int} | None,
+          "resistance": {"level": float, "confirmations": int, "total_windows": int} | None,
+        }
+    """
+    support_candidates = []
+    resistance_candidates = []
+    for order in windows:
+        sr = find_support_resistance(df, current_price, order=order, cluster_pct=cluster_pct)
+        if not sr:
+            continue
+        if sr["support"] is not None:
+            support_candidates.append(sr["support"])
+        if sr["resistance"] is not None:
+            resistance_candidates.append(sr["resistance"])
+
+    total_windows = len(windows)
+
+    def _best_cluster(candidates):
+        if not candidates:
+            return None
+        clusters = _cluster_levels(candidates, confirm_cluster_pct)
+        best = max(clusters, key=lambda c: (c["touches"], -abs(current_price - c["level"])))
+        return {
+            "level": best["level"],
+            "confirmations": best["touches"],
+            "total_windows": total_windows,
+        }
+
+    support = _best_cluster(support_candidates)
+    resistance = _best_cluster(resistance_candidates)
+
+    if support is None and resistance is None:
+        return None
+
+    return {"support": support, "resistance": resistance}
+
+
+def volume_signal(df, lookback=20):
+    """Calcule le ratio volume du jour / moyenne des `lookback` jours précédents."""
     volumes = df["Volume"].tolist()
     if len(volumes) < lookback + 1:
         return None
@@ -80,16 +134,92 @@ def volume_signal(df, lookback=20, threshold=1.8):
     avg = sum(baseline) / len(baseline)
     if avg <= 0:
         return None
-    ratio = recent / avg
-    return {"ratio": ratio, "is_anomalous": ratio >= threshold}
+    return {"ratio": recent / avg}
 
 
-def valuation_signal(pe, peer_median_pe, discount_threshold=0.70):
-    """Compare le PER (price/earnings) d'une valeur à la médiane du CAC 40 du jour."""
-    if not pe or pe <= 0 or not peer_median_pe or peer_median_pe <= 0:
+def valuation_ratio(pe, reference_median_pe):
+    """Ratio PER de la valeur / PER médian de référence (secteur ou, à défaut, tout l'indice)."""
+    if not pe or pe <= 0 or not reference_median_pe or reference_median_pe <= 0:
         return None
-    ratio = pe / peer_median_pe
-    return {"ratio": ratio, "is_undervalued": ratio <= discount_threshold}
+    return pe / reference_median_pe
+
+
+def rsi(df, period=14):
+    """RSI (Relative Strength Index) selon la méthode de lissage de Wilder."""
+    closes = df["Close"].tolist()
+    if len(closes) < period + 1:
+        return None
+
+    deltas = [closes[i] - closes[i - 1] for i in range(1, len(closes))]
+    gains = [d if d > 0 else 0.0 for d in deltas]
+    losses = [-d if d < 0 else 0.0 for d in deltas]
+
+    avg_gain = sum(gains[:period]) / period
+    avg_loss = sum(losses[:period]) / period
+
+    for i in range(period, len(gains)):
+        avg_gain = (avg_gain * (period - 1) + gains[i]) / period
+        avg_loss = (avg_loss * (period - 1) + losses[i]) / period
+
+    if avg_loss == 0:
+        return 100.0
+    rs = avg_gain / avg_loss
+    return 100 - (100 / (1 + rs))
+
+
+def _ema_series(values, period):
+    """Série de moyennes mobiles exponentielles (amorcée par une moyenne simple)."""
+    if len(values) < period:
+        return []
+    multiplier = 2 / (period + 1)
+    ema_values = [sum(values[:period]) / period]
+    for value in values[period:]:
+        ema_values.append((value - ema_values[-1]) * multiplier + ema_values[-1])
+    return ema_values
+
+
+def macd(df, fast=12, slow=26, signal=9):
+    """MACD standard : ligne MACD (EMA rapide - EMA lente), ligne de signal, histogramme."""
+    closes = df["Close"].tolist()
+    if len(closes) < slow + signal:
+        return None
+
+    ema_fast = _ema_series(closes, fast)
+    ema_slow = _ema_series(closes, slow)
+    n = min(len(ema_fast), len(ema_slow))
+    if n < signal:
+        return None
+
+    macd_line = [f - s for f, s in zip(ema_fast[-n:], ema_slow[-n:])]
+    signal_line = _ema_series(macd_line, signal)
+    if not signal_line:
+        return None
+
+    macd_value = macd_line[-1]
+    signal_value = signal_line[-1]
+    return {"macd": macd_value, "signal": signal_value, "histogram": macd_value - signal_value}
+
+
+def weekly_returns(df):
+    """Rendements hebdomadaires (variation en %) à partir d'un historique quotidien."""
+    weekly_close = df["Close"].resample("W").last().dropna()
+    return weekly_close.pct_change().dropna()
+
+
+def compute_beta(stock_df, index_df, min_points=10):
+    """Bêta d'une valeur par rapport à un indice, à partir des rendements hebdomadaires alignés."""
+    stock_weekly = weekly_returns(stock_df)
+    index_weekly = weekly_returns(index_df)
+
+    combined = stock_weekly.to_frame("stock").join(index_weekly.to_frame("index"), how="inner").dropna()
+    if len(combined) < min_points:
+        return None
+
+    variance = combined["index"].var()
+    if not variance:
+        return None
+    covariance = combined["stock"].cov(combined["index"])
+    return covariance / variance
 
 
 def horizon_bucket(upside_pct):

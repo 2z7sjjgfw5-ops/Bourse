@@ -18,20 +18,63 @@ DISCLAIMER = (
 )
 
 
+def _fr(value, decimals=1):
+    """Formate un nombre avec une virgule décimale (convention française)."""
+    return f"{value:.{decimals}f}".replace(".", ",")
+
+
+def _score_line(opp):
+    s = opp.scores
+    return (
+        f"Score de confiance {_fr(opp.total_score)}/10 — "
+        f"support {_fr(s['support'])} · MACD {_fr(s['macd'])} · "
+        f"RSI {_fr(s['rsi'])} · volume {_fr(s['volume'])} · PER {_fr(s['per'])}"
+    )
+
+
 def format_message(opp):
+    distance_pct = (opp.price - opp.support_level) / opp.support_level * 100
     lines = [
+        _score_line(opp),
+        "",
         f"{opp.name} ({opp.ticker})",
         f"Prix actuel : {opp.price:.2f} EUR",
-        f"Support proche : {opp.support:.2f} EUR (prix à +{(opp.price - opp.support) / opp.support * 100:.1f}% du support)",
-        f"Résistance visée : {opp.resistance:.2f} EUR",
+        (
+            f"Support proche : {opp.support_level:.2f} EUR (prix à +{distance_pct:.1f}% du support, "
+            f"confirmé par {opp.support_confirmations}/{opp.support_total_windows} fenêtres)"
+        ),
+        f"Résistance visée : {opp.resistance_level:.2f} EUR",
         f"Potentiel de hausse estimé : +{opp.upside_pct:.1f}%",
         f"Horizon indicatif : {opp.horizon}",
-        "Signaux détectés : " + ", ".join(opp.signals),
+        f"Bêta (1 an vs CAC 40) : {opp.beta:.2f}" if opp.beta is not None else "Bêta (1 an vs CAC 40) : non disponible",
     ]
-    if opp.volume_ratio:
+
+    if opp.rsi_value is not None:
+        lines.append(f"RSI (14 jours) : {opp.rsi_value:.0f}")
+    else:
+        lines.append("RSI (14 jours) : non disponible")
+
+    if opp.macd_data is not None:
+        position = "au-dessus" if opp.macd_data["histogram"] > 0 else "en dessous"
+        lines.append(f"MACD : ligne {position} du signal (histogramme {opp.macd_data['histogram']:.2f})")
+    else:
+        lines.append("MACD : non disponible")
+
+    if opp.volume_ratio is not None:
         lines.append(f"Volume du jour : x{opp.volume_ratio:.1f} la moyenne 20 jours")
-    if opp.pe and opp.peer_median_pe:
-        lines.append(f"PER : {opp.pe:.1f} (médiane CAC 40 : {opp.peer_median_pe:.1f})")
+    else:
+        lines.append("Volume du jour : non disponible")
+
+    if opp.pe and opp.reference_median_pe:
+        if opp.sector_is_fallback:
+            lines.append(
+                f"PER : {opp.pe:.1f} (secteur trop restreint, comparé au CAC 40 entier : {opp.reference_median_pe:.1f})"
+            )
+        else:
+            lines.append(f"PER : {opp.pe:.1f} (secteur {opp.sector_name}, médiane : {opp.reference_median_pe:.1f})")
+    else:
+        lines.append("PER : non disponible")
+
     lines.append("")
     lines.append(DISCLAIMER)
     return "\n".join(lines)

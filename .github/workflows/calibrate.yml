@@ -1,0 +1,30 @@
+name: Calibration du seuil de confiance
+
+# Ce workflow ne se déclenche jamais automatiquement (pas de "schedule") :
+# il sert uniquement à calculer la distribution réelle des scores de
+# confiance sur l'historique récent, pour choisir un seuil de déclenchement
+# justifié par les données plutôt qu'arbitraire. Résultat visible dans les
+# logs de l'exécution, onglet Actions.
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  calibrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupération du dépôt
+        uses: actions/checkout@v4
+
+      - name: Installation de Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installation des dépendances
+        run: pip install -r requirements.txt
+
+      - name: Calcul de la distribution des scores
+        run: python -m cac40_watch.calibrate

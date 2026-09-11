@@ -20,29 +20,36 @@ anormal, ou valorisation basse par rapport aux autres valeurs de l'indice.
 
 ## Comment ça marche (en résumé)
 
-Pour chaque valeur du CAC 40, le programme :
+Pour chaque valeur du CAC 40, le programme calcule un **score de confiance
+continu sur 10**, à partir de cinq signaux, chacun rapportant un nombre de
+points proportionnel à son intensité (jamais tout-ou-rien) :
 
-1. Récupère l'historique récent des cours (source : Yahoo Finance, gratuite).
-2. Calcule un **support** (niveau de prix déjà "rebondi" plusieurs fois par le
-   passé) et une **résistance** (niveau déjà "buté" par le passé).
-3. Vérifie si le prix actuel est **proche d'un support** (condition
-   obligatoire pour parler de point d'entrée).
-4. Vérifie si le **volume du jour** est anormalement élevé par rapport à la
-   moyenne des 20 derniers jours (signe d'un regain d'intérêt).
-5. Compare le **PER** (ratio cours/bénéfices) de la valeur à la médiane du
-   CAC 40 du jour (signe d'une possible sous-évaluation relative).
-6. Si le prix est proche d'un support **et** qu'au moins un des deux autres
-   signaux est présent, une alerte est déclenchée avec :
-   - le potentiel de hausse estimé jusqu'à la résistance (en %),
-   - un horizon indicatif (plus le mouvement visé est grand, plus l'horizon
-     annoncé est long — c'est une heuristique simple, pas une prédiction),
-   - le détail des signaux qui ont déclenché l'alerte.
+| Signal | Poids max | Ce qu'il mesure |
+|---|---|---|
+| Support technique | 3,5 | Proximité d'un niveau de prix déjà "rebondi" par le passé, confirmé par 3 fenêtres de détection différentes (courte/moyenne/longue) |
+| MACD | 2,5 | Momentum de tendance (moyennes mobiles exponentielles) |
+| RSI | 1,8 | Zone de survente (RSI bas = signal plus fort) |
+| Volume d'échange | 1,2 | Volume du jour anormalement élevé vs moyenne 20 jours |
+| PER sectoriel | 1,0 | Valorisation plus basse que la médiane du secteur (bonus de contexte, jamais déclencheur à lui seul) |
+
+Une alerte est envoyée quand le score total dépasse un seuil (actuellement
+**5,0/10**, une valeur de départ en attente d'une calibration sur données
+réelles — voir `cac40_watch/calibrate.py`). L'alerte indique aussi :
+- le potentiel de hausse estimé jusqu'à la résistance la plus proche (en %),
+- un horizon indicatif (plus le mouvement visé est grand, plus l'horizon
+  annoncé est long — c'est une heuristique simple, pas une prédiction),
+- le **bêta** de la valeur par rapport au CAC 40 (calibrer son niveau de
+  confiance dans l'estimation chiffrée).
 
 Une même valeur n'est pas ré-notifiée plus d'une fois tous les 3 jours, sauf
-si le signal se renforce entre-temps.
+si le score se renforce entre-temps.
 
-Tous les seuils (proximité du support, seuil de volume, seuil de
-valorisation...) sont modifiables dans `cac40_watch/config.py`.
+Chaque alerte envoyée est aussi enregistrée dans `state/alert_history.json` :
+le programme revérifie automatiquement le prix réel 1, 4 et 6 semaines après
+chaque alerte, pour permettre de calculer à terme un taux de réussite réel du
+système — entièrement automatique, aucune action de votre part.
+
+Tous les poids et seuils sont modifiables dans `cac40_watch/config.py`.
 
 ## Mise en place — étape par étape (aucune compétence de développeur requise)
 
