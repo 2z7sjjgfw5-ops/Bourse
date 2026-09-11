@@ -64,12 +64,39 @@ def _reference_medians_for_day(collected, day_idx):
     return sector_median, global_median
 
 
+def _report_sector_coverage(collected):
+    """Affiche la couverture sectorielle réelle (nb de valeurs comparables par secteur),
+    pour vérifier honnêtement si la comparaison au secteur est statistiquement exploitable."""
+    sector_pes = defaultdict(list)
+    no_sector = []
+    no_pe = []
+    for ticker, item in collected.items():
+        if not item["sector"]:
+            no_sector.append(ticker)
+            continue
+        if item["pe"] and item["pe"] > 0:
+            sector_pes[item["sector"]].append(ticker)
+        else:
+            no_pe.append(ticker)
+
+    print(f"\nCouverture sectorielle ({len(collected)} valeurs au total) :")
+    for sector, members in sorted(sector_pes.items(), key=lambda kv: -len(kv[1])):
+        usable = "OK (médiane sectorielle utilisable)" if len(members) >= cfg.MIN_SECTOR_SAMPLE else "insuffisant -> repli sur le CAC 40 entier"
+        print(f"  {sector:<30} {len(members):>2} valeur(s) avec PER valide -> {usable}")
+    if no_sector:
+        print(f"  Secteur inconnu (non fourni par Yahoo Finance) : {', '.join(no_sector)}")
+    if no_pe:
+        print(f"  PER indisponible ou négatif (exclu du calcul) : {', '.join(no_pe)}")
+
+
 def run():
     print(f"Calibration sur les {LOOKBACK_DAYS} derniers jours de bourse, {len(CAC40_TICKERS)} valeurs suivies.")
     collected, index_df = _collect()
     if not collected:
         print("Aucune donnée récupérée, calibration impossible.")
         return
+
+    _report_sector_coverage(collected)
 
     all_scores = []
     per_ticker_alert_days = defaultdict(int)
