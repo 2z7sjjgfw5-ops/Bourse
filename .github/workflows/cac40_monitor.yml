@@ -8,7 +8,13 @@ on:
     # heure de Paris) été comme hiver ; le script vérifie en plus l'heure
     # locale de Paris et ne fait rien en dehors des horaires de marché.
     - cron: "*/30 7-16 * * 1-5"
-  workflow_dispatch: {}   # permet de lancer une exécution manuelle depuis l'onglet "Actions"
+  workflow_dispatch:      # permet de lancer une exécution manuelle depuis l'onglet "Actions"
+    inputs:
+      force:
+        description: "Forcer l'analyse même si le marché parisien est fermé (pour tester)"
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write   # nécessaire pour committer le fichier d'état des alertes
@@ -39,7 +45,7 @@ jobs:
           PUSHOVER_APP_TOKEN: ${{ secrets.PUSHOVER_APP_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python -m cac40_watch.main
+        run: python -m cac40_watch.main ${{ github.event.inputs.force == 'true' && '--force' || '' }}
 
       - name: Sauvegarde de l'historique des alertes
         run: |
