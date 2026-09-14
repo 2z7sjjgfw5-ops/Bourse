@@ -1,4 +1,35 @@
 {
+  "EN.PA_2026-09-14": {
+    "alert_date": "2026-09-14",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-09-21",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-12",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-26",
+        "price": null
+      }
+    },
+    "name": "Bouygues",
+    "price_at_alert": 43.630001068115234,
+    "score": 5.106931911205649,
+    "ticker": "EN.PA",
+    "upside_announced_pct": 0.366719787978729
+  },
   "STLAP.PA_2026-09-14": {
     "alert_date": "2026-09-14",
     "followups": {
