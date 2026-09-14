@@ -1,1 +1,64 @@
-{}
+{
+  "STLAP.PA_2026-09-14": {
+    "alert_date": "2026-09-14",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-09-21",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-12",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-26",
+        "price": null
+      }
+    },
+    "name": "Stellantis",
+    "price_at_alert": 4.613500118255615,
+    "score": 6.045797639625621,
+    "ticker": "STLAP.PA",
+    "upside_announced_pct": 3.974745356974644
+  },
+  "STMPA.PA_2026-09-14": {
+    "alert_date": "2026-09-14",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-09-21",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-12",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-26",
+        "price": null
+      }
+    },
+    "name": "STMicroelectronics",
+    "price_at_alert": 42.73500061035156,
+    "score": 5.210112578271695,
+    "ticker": "STMPA.PA",
+    "upside_announced_pct": 4.068677850137163
+  }
+}
