@@ -87,10 +87,10 @@
       }
     },
     "name": "Bouygues",
-    "price_at_alert": 43.52000045776367,
-    "score": 5.4893853459647675,
+    "price_at_alert": 43.5099983215332,
+    "score": 5.534497730750366,
     "ticker": "EN.PA",
-    "upside_announced_pct": 0.6204054570856642
+    "upside_announced_pct": 0.6435362095970633
   },
   "ENGI.PA_2026-09-15": {
     "alert_date": "2026-09-15",
