@@ -1,4 +1,35 @@
 {
+  "BNP.PA_2026-09-15": {
+    "alert_date": "2026-09-15",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-09-22",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-13",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-27",
+        "price": null
+      }
+    },
+    "name": "BNP Paribas",
+    "price_at_alert": 100.33999633789062,
+    "score": 5.2522088407911625,
+    "ticker": "BNP.PA",
+    "upside_announced_pct": 3.3585841074669083
+  },
   "EN.PA_2026-09-14": {
     "alert_date": "2026-09-14",
     "followups": {
@@ -30,6 +61,37 @@
     "ticker": "EN.PA",
     "upside_announced_pct": 0.5049373932615828
   },
+  "EN.PA_2026-09-15": {
+    "alert_date": "2026-09-15",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-09-22",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-13",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-27",
+        "price": null
+      }
+    },
+    "name": "Bouygues",
+    "price_at_alert": 43.52000045776367,
+    "score": 5.4893853459647675,
+    "ticker": "EN.PA",
+    "upside_announced_pct": 0.6204054570856642
+  },
   "ENGI.PA_2026-09-15": {
     "alert_date": "2026-09-15",
     "followups": {
@@ -56,10 +118,10 @@
       }
     },
     "name": "Engie",
-    "price_at_alert": 23.479999542236328,
-    "score": 5.08949413346438,
+    "price_at_alert": 23.40999984741211,
+    "score": 5.272783588316088,
     "ticker": "ENGI.PA",
-    "upside_announced_pct": 2.0301010705251747
+    "upside_announced_pct": 2.3351876140695347
   },
   "STLAP.PA_2026-09-14": {
     "alert_date": "2026-09-14",
