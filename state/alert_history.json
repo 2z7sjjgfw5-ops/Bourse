@@ -25,10 +25,10 @@
       }
     },
     "name": "Danone",
-    "price_at_alert": 60.959999084472656,
-    "score": 5.287435956784394,
+    "price_at_alert": 60.939998626708984,
+    "score": 5.2930329505790095,
     "ticker": "BN.PA",
-    "upside_announced_pct": 4.363518440019078
+    "upside_announced_pct": 4.397770461510149
   },
   "BNP.PA_2026-09-15": {
     "alert_date": "2026-09-15",
