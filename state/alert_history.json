@@ -242,10 +242,10 @@
       }
     },
     "name": "Orange",
-    "price_at_alert": 15.979999542236328,
-    "score": 5.656712602923366,
+    "price_at_alert": 15.944999694824219,
+    "score": 5.949460948325497,
     "ticker": "ORA.PA",
-    "upside_announced_pct": 0.4380456622617814
+    "upside_announced_pct": 0.6585107823514804
   },
   "STLAP.PA_2026-09-14": {
     "alert_date": "2026-09-14",
