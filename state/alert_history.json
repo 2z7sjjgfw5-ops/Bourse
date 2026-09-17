@@ -61,6 +61,37 @@
     "ticker": "BNP.PA",
     "upside_announced_pct": 3.3585841074669083
   },
+  "CA.PA_2026-09-17": {
+    "alert_date": "2026-09-17",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-09-24",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-15",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-29",
+        "price": null
+      }
+    },
+    "name": "Carrefour",
+    "price_at_alert": 16.920000076293945,
+    "score": 5.078313241703671,
+    "ticker": "CA.PA",
+    "upside_announced_pct": 3.102837115947092
+  },
   "EN.PA_2026-09-14": {
     "alert_date": "2026-09-14",
     "followups": {
@@ -185,6 +216,37 @@
     "ticker": "ORA.PA",
     "upside_announced_pct": 1.166085525441795
   },
+  "ORA.PA_2026-09-17": {
+    "alert_date": "2026-09-17",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-09-24",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-15",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-29",
+        "price": null
+      }
+    },
+    "name": "Orange",
+    "price_at_alert": 15.979999542236328,
+    "score": 5.656712602923366,
+    "ticker": "ORA.PA",
+    "upside_announced_pct": 0.4380456622617814
+  },
   "STLAP.PA_2026-09-14": {
     "alert_date": "2026-09-14",
     "followups": {
@@ -246,6 +308,37 @@
     "score": 6.2104880433956655,
     "ticker": "STMPA.PA",
     "upside_announced_pct": 4.804403617701094
+  },
+  "STMPA.PA_2026-09-17": {
+    "alert_date": "2026-09-17",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-09-24",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-15",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-29",
+        "price": null
+      }
+    },
+    "name": "STMicroelectronics",
+    "price_at_alert": 42.42499923706055,
+    "score": 6.144822028898831,
+    "ticker": "STMPA.PA",
+    "upside_announced_pct": 4.829112349377901
   },
   "URW.PA_2026-09-15": {
     "alert_date": "2026-09-15",
