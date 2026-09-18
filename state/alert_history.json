@@ -180,10 +180,10 @@
       }
     },
     "name": "Bouygues",
-    "price_at_alert": 44.2599983215332,
-    "score": 5.481839590592085,
+    "price_at_alert": 43.61000061035156,
+    "score": 5.502193287174215,
     "ticker": "EN.PA",
-    "upside_announced_pct": 2.0684606316935508
+    "upside_announced_pct": 0.4127500634179197
   },
   "ENGI.PA_2026-09-15": {
     "alert_date": "2026-09-15",
@@ -490,9 +490,9 @@
       }
     },
     "name": "Veolia",
-    "price_at_alert": 31.719999313354492,
-    "score": 5.509542736165601,
+    "price_at_alert": 31.56999969482422,
+    "score": 6.117354849859167,
     "ticker": "VIE.PA",
-    "upside_announced_pct": 2.4248673289271494
+    "upside_announced_pct": 2.9115221016819226
   }
 }
