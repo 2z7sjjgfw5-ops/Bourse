@@ -463,5 +463,36 @@
     "score": 5.279232788738086,
     "ticker": "VIE.PA",
     "upside_announced_pct": 2.5353138472119685
+  },
+  "VIE.PA_2026-09-18": {
+    "alert_date": "2026-09-18",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-09-25",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-16",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-30",
+        "price": null
+      }
+    },
+    "name": "Veolia",
+    "price_at_alert": 31.719999313354492,
+    "score": 5.509542736165601,
+    "ticker": "VIE.PA",
+    "upside_announced_pct": 2.4248673289271494
   }
 }
