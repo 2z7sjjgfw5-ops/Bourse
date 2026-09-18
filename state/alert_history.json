@@ -180,10 +180,10 @@
       }
     },
     "name": "Bouygues",
-    "price_at_alert": 44.38999938964844,
-    "score": 5.101830383203503,
+    "price_at_alert": 44.2599983215332,
+    "score": 5.481839590592085,
     "ticker": "EN.PA",
-    "upside_announced_pct": 1.7695417516430099
+    "upside_announced_pct": 2.0684606316935508
   },
   "ENGI.PA_2026-09-15": {
     "alert_date": "2026-09-15",
@@ -401,6 +401,37 @@
     "score": 5.1290288471468015,
     "ticker": "URW.PA",
     "upside_announced_pct": 1.751761740584132
+  },
+  "URW.PA_2026-09-18": {
+    "alert_date": "2026-09-18",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-09-25",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-16",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-30",
+        "price": null
+      }
+    },
+    "name": "Unibail-Rodamco-Westfield",
+    "price_at_alert": 93.63999938964844,
+    "score": 5.097907437889234,
+    "ticker": "URW.PA",
+    "upside_announced_pct": 1.7300328461568921
   },
   "VIE.PA_2026-09-16": {
     "alert_date": "2026-09-16",
