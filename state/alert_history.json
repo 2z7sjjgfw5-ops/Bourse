@@ -366,10 +366,10 @@
       }
     },
     "name": "Thales",
-    "price_at_alert": 236.6999969482422,
-    "score": 5.099645866011879,
+    "price_at_alert": 236.10000610351562,
+    "score": 5.417662363050331,
     "ticker": "HO.PA",
-    "upside_announced_pct": 1.3375731097109886
+    "upside_announced_pct": 1.5950979488504566
   },
   "ORA.PA_2026-09-16": {
     "alert_date": "2026-09-16",
