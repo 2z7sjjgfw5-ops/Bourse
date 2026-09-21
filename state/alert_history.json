@@ -158,11 +158,11 @@
     "alert_date": "2026-09-14",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": 2.249253039018829,
+        "checked_date": "2026-09-21",
+        "done": true,
         "due_date": "2026-09-21",
-        "price": null
+        "price": 44.54999923706055
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -340,15 +340,46 @@
     "ticker": "ORA.PA",
     "upside_announced_pct": 0.6585107823514804
   },
-  "STLAP.PA_2026-09-14": {
-    "alert_date": "2026-09-14",
+  "ORA.PA_2026-09-21": {
+    "alert_date": "2026-09-21",
     "followups": {
       "1_semaine": {
         "actual_change_pct": null,
         "checked_date": null,
         "done": false,
-        "due_date": "2026-09-21",
+        "due_date": "2026-09-28",
         "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-19",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-02",
+        "price": null
+      }
+    },
+    "name": "Orange",
+    "price_at_alert": 15.875,
+    "score": 5.120077667719434,
+    "ticker": "ORA.PA",
+    "upside_announced_pct": 1.1023573988065944
+  },
+  "STLAP.PA_2026-09-14": {
+    "alert_date": "2026-09-14",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": -5.925760168187829,
+        "checked_date": "2026-09-21",
+        "done": true,
+        "due_date": "2026-09-21",
+        "price": 4.334000110626221
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -375,11 +406,11 @@
     "alert_date": "2026-09-14",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": NaN,
+        "checked_date": "2026-09-21",
+        "done": true,
         "due_date": "2026-09-21",
-        "price": null
+        "price": NaN
       },
       "4_semaines": {
         "actual_change_pct": null,
