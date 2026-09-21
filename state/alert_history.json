@@ -366,10 +366,10 @@
       }
     },
     "name": "Thales",
-    "price_at_alert": 236.10000610351562,
-    "score": 5.417662363050331,
+    "price_at_alert": 236.0,
+    "score": 5.470434050906515,
     "ticker": "HO.PA",
-    "upside_announced_pct": 1.5950979488504566
+    "upside_announced_pct": 1.638149346656189
   },
   "ORA.PA_2026-09-16": {
     "alert_date": "2026-09-16",
@@ -738,9 +738,9 @@
       }
     },
     "name": "Veolia",
-    "price_at_alert": 31.600000381469727,
-    "score": 6.36795031476288,
+    "price_at_alert": 31.610000610351562,
+    "score": 6.374302612848423,
     "ticker": "VIE.PA",
-    "upside_announced_pct": 2.813819054545402
+    "upside_announced_pct": 2.6969311780837257
   }
 }
