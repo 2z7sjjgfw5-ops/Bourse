@@ -402,6 +402,37 @@
     "ticker": "HO.PA",
     "upside_announced_pct": 1.6812372463920342
   },
+  "HO.PA_2026-09-22": {
+    "alert_date": "2026-09-22",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-09-29",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-20",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-03",
+        "price": null
+      }
+    },
+    "name": "Thales",
+    "price_at_alert": 236.0,
+    "score": 5.574590209571458,
+    "ticker": "HO.PA",
+    "upside_announced_pct": 1.638149346656189
+  },
   "ORA.PA_2026-09-16": {
     "alert_date": "2026-09-16",
     "followups": {
@@ -893,9 +924,9 @@
       }
     },
     "name": "Veolia",
-    "price_at_alert": 31.579999923706055,
-    "score": 6.5598538331521805,
+    "price_at_alert": 31.56999969482422,
+    "score": 6.5891072106949675,
     "ticker": "VIE.PA",
-    "upside_announced_pct": 2.7944922439219875
+    "upside_announced_pct": 2.8270538042694158
   }
 }
