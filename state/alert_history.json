@@ -34,11 +34,11 @@
     "alert_date": "2026-09-16",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -1.1158521832945176,
+        "checked_date": "2026-09-23",
+        "done": true,
         "due_date": "2026-09-23",
-        "price": null
+        "price": 60.2599983215332
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -309,6 +309,37 @@
     "ticker": "EN.PA",
     "upside_announced_pct": 0.5972941500612384
   },
+  "EN.PA_2026-09-23": {
+    "alert_date": "2026-09-23",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-09-30",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-21",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-04",
+        "price": null
+      }
+    },
+    "name": "Bouygues",
+    "price_at_alert": 43.4900016784668,
+    "score": 5.838088302483056,
+    "ticker": "EN.PA",
+    "upside_announced_pct": 0.6898119693775167
+  },
   "ENGI.PA_2026-09-15": {
     "alert_date": "2026-09-15",
     "followups": {
@@ -437,11 +468,11 @@
     "alert_date": "2026-09-16",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -5.357702111933294,
+        "checked_date": "2026-09-23",
+        "done": true,
         "due_date": "2026-09-23",
-        "price": null
+        "price": 15.015000343322754
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -809,11 +840,11 @@
     "alert_date": "2026-09-16",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -0.0632525529185178,
+        "checked_date": "2026-09-23",
+        "done": true,
         "due_date": "2026-09-23",
-        "price": null
+        "price": 31.600000381469727
       },
       "4_semaines": {
         "actual_change_pct": null,
