@@ -867,6 +867,37 @@
     "ticker": "URW.PA",
     "upside_announced_pct": 2.298109242406553
   },
+  "URW.PA_2026-09-23": {
+    "alert_date": "2026-09-23",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-09-30",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-21",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-04",
+        "price": null
+      }
+    },
+    "name": "Unibail-Rodamco-Westfield",
+    "price_at_alert": 93.62000274658203,
+    "score": 5.656015469555814,
+    "ticker": "URW.PA",
+    "upside_announced_pct": 1.6876727639071305
+  },
   "VIE.PA_2026-09-16": {
     "alert_date": "2026-09-16",
     "followups": {
