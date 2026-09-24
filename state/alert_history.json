@@ -402,6 +402,37 @@
     "ticker": "ENGI.PA",
     "upside_announced_pct": 2.1303217461768615
   },
+  "ENGI.PA_2026-09-24": {
+    "alert_date": "2026-09-24",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-01",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-22",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-05",
+        "price": null
+      }
+    },
+    "name": "Engie",
+    "price_at_alert": 23.5,
+    "score": 5.44046917268528,
+    "ticker": "ENGI.PA",
+    "upside_announced_pct": 2.1303217461768615
+  },
   "HO.PA_2026-09-21": {
     "alert_date": "2026-09-21",
     "followups": {
