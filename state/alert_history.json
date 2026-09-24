@@ -428,10 +428,10 @@
       }
     },
     "name": "Engie",
-    "price_at_alert": 23.5,
-    "score": 5.44046917268528,
+    "price_at_alert": 23.420000076293945,
+    "score": 5.671303337716753,
     "ticker": "ENGI.PA",
-    "upside_announced_pct": 2.1303217461768615
+    "upside_announced_pct": 2.479186730000631
   },
   "HO.PA_2026-09-21": {
     "alert_date": "2026-09-21",
