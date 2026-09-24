@@ -158,11 +158,11 @@
     "alert_date": "2026-09-17",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -3.0446424423442875,
+        "checked_date": "2026-09-24",
+        "done": true,
         "due_date": "2026-09-24",
-        "price": null
+        "price": 16.399999618530273
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -530,11 +530,11 @@
     "alert_date": "2026-09-17",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -9.72091104877023,
+        "checked_date": "2026-09-24",
+        "done": true,
         "due_date": "2026-09-24",
-        "price": null
+        "price": 14.395000457763672
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -747,11 +747,11 @@
     "alert_date": "2026-09-17",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": 9.840894076937207,
+        "checked_date": "2026-09-24",
+        "done": true,
         "due_date": "2026-09-24",
-        "price": null
+        "price": 46.599998474121094
       },
       "4_semaines": {
         "actual_change_pct": null,
