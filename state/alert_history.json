@@ -154,6 +154,37 @@
     "ticker": "BNP.PA",
     "upside_announced_pct": 2.960758668772021
   },
+  "BNP.PA_2026-09-25": {
+    "alert_date": "2026-09-25",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-02",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-23",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-06",
+        "price": null
+      }
+    },
+    "name": "BNP Paribas",
+    "price_at_alert": 99.23999786376953,
+    "score": 5.399300083480035,
+    "ticker": "BNP.PA",
+    "upside_announced_pct": 4.481681326214724
+  },
   "CA.PA_2026-09-17": {
     "alert_date": "2026-09-17",
     "followups": {
@@ -680,6 +711,37 @@
     "score": 5.134505802625906,
     "ticker": "RI.PA",
     "upside_announced_pct": 4.6747938325443545
+  },
+  "RI.PA_2026-09-25": {
+    "alert_date": "2026-09-25",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-02",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-23",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-06",
+        "price": null
+      }
+    },
+    "name": "Pernod Ricard",
+    "price_at_alert": 59.099998474121094,
+    "score": 5.1172215140627815,
+    "ticker": "RI.PA",
+    "upside_announced_pct": 4.089115676555826
   },
   "SGO.PA_2026-09-22": {
     "alert_date": "2026-09-22",
