@@ -433,6 +433,37 @@
     "ticker": "EN.PA",
     "upside_announced_pct": 0.6898119693775167
   },
+  "EN.PA_2026-09-28": {
+    "alert_date": "2026-09-28",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-05",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-26",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-09",
+        "price": null
+      }
+    },
+    "name": "Bouygues",
+    "price_at_alert": 43.439998626708984,
+    "score": 5.459333585705327,
+    "ticker": "EN.PA",
+    "upside_announced_pct": 0.8057143183314035
+  },
   "ENGI.PA_2026-09-15": {
     "alert_date": "2026-09-15",
     "followups": {
@@ -862,10 +893,10 @@
       }
     },
     "name": "Pernod Ricard",
-    "price_at_alert": 59.040000915527344,
-    "score": 5.477368761170988,
+    "price_at_alert": 58.97999954223633,
+    "score": 5.658117896622634,
     "ticker": "RI.PA",
-    "upside_announced_pct": 4.1948929922728615
+    "upside_announced_pct": 4.300892258430362
   },
   "SGO.PA_2026-09-22": {
     "alert_date": "2026-09-22",
