@@ -344,11 +344,11 @@
     "alert_date": "2026-09-21",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -0.8959324617163176,
+        "checked_date": "2026-09-28",
+        "done": true,
         "due_date": "2026-09-28",
-        "price": null
+        "price": 43.13999938964844
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -437,11 +437,11 @@
     "alert_date": "2026-09-21",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -0.6382962490649934,
+        "checked_date": "2026-09-28",
+        "done": true,
         "due_date": "2026-09-28",
-        "price": null
+        "price": 23.350000381469727
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -499,11 +499,11 @@
     "alert_date": "2026-09-21",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -2.755404903847634,
+        "checked_date": "2026-09-28",
+        "done": true,
         "due_date": "2026-09-28",
-        "price": null
+        "price": 229.39999389648438
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -654,11 +654,11 @@
     "alert_date": "2026-09-21",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -10.803150567482774,
+        "checked_date": "2026-09-28",
+        "done": true,
         "due_date": "2026-09-28",
-        "price": null
+        "price": 14.15999984741211
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -716,11 +716,11 @@
     "alert_date": "2026-09-21",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": 0.0,
+        "checked_date": "2026-09-28",
+        "done": true,
         "due_date": "2026-09-28",
-        "price": null
+        "price": 59.040000915527344
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -773,6 +773,37 @@
     "score": 5.460154958048281,
     "ticker": "RI.PA",
     "upside_announced_pct": 4.124346428566194
+  },
+  "RI.PA_2026-09-28": {
+    "alert_date": "2026-09-28",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-05",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-26",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-09",
+        "price": null
+      }
+    },
+    "name": "Pernod Ricard",
+    "price_at_alert": 59.040000915527344,
+    "score": 5.477368761170988,
+    "ticker": "RI.PA",
+    "upside_announced_pct": 4.1948929922728615
   },
   "SGO.PA_2026-09-22": {
     "alert_date": "2026-09-22",
@@ -1088,11 +1119,11 @@
     "alert_date": "2026-09-21",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -0.7908889439190034,
+        "checked_date": "2026-09-28",
+        "done": true,
         "due_date": "2026-09-28",
-        "price": null
+        "price": 31.360000610351562
       },
       "4_semaines": {
         "actual_change_pct": null,
