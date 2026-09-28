@@ -521,10 +521,10 @@
       }
     },
     "name": "Engie",
-    "price_at_alert": 23.469999313354492,
-    "score": 5.145275386829712,
+    "price_at_alert": 23.40999984741211,
+    "score": 5.249988325358473,
     "ticker": "ENGI.PA",
-    "upside_announced_pct": 2.2608705262941466
+    "upside_announced_pct": 2.522963548864545
   },
   "HO.PA_2026-09-21": {
     "alert_date": "2026-09-21",
@@ -1265,9 +1265,9 @@
       }
     },
     "name": "Veolia",
-    "price_at_alert": 31.459999084472656,
-    "score": 5.285442351027136,
+    "price_at_alert": 31.40999984741211,
+    "score": 5.362252297447645,
     "ticker": "VIE.PA",
-    "upside_announced_pct": 3.0885831903529137
+    "upside_announced_pct": 3.252682220413719
   }
 }
