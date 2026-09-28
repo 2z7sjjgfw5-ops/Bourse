@@ -495,6 +495,37 @@
     "ticker": "ENGI.PA",
     "upside_announced_pct": 2.479186730000631
   },
+  "ENGI.PA_2026-09-28": {
+    "alert_date": "2026-09-28",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-05",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-26",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-09",
+        "price": null
+      }
+    },
+    "name": "Engie",
+    "price_at_alert": 23.469999313354492,
+    "score": 5.145275386829712,
+    "ticker": "ENGI.PA",
+    "upside_announced_pct": 2.2608705262941466
+  },
   "HO.PA_2026-09-21": {
     "alert_date": "2026-09-21",
     "followups": {
@@ -1207,5 +1238,36 @@
     "score": 6.712043043808922,
     "ticker": "VIE.PA",
     "upside_announced_pct": 2.9248561506004704
+  },
+  "VIE.PA_2026-09-28": {
+    "alert_date": "2026-09-28",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-05",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-26",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-09",
+        "price": null
+      }
+    },
+    "name": "Veolia",
+    "price_at_alert": 31.459999084472656,
+    "score": 5.285442351027136,
+    "ticker": "VIE.PA",
+    "upside_announced_pct": 3.0885831903529137
   }
 }
