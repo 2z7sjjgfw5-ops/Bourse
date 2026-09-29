@@ -211,10 +211,10 @@
       }
     },
     "name": "BNP Paribas",
-    "price_at_alert": 97.61000061035156,
-    "score": 5.494787684017682,
+    "price_at_alert": 97.58999633789062,
+    "score": 5.50918045971587,
     "ticker": "BNP.PA",
-    "upside_announced_pct": 6.226429328768886
+    "upside_announced_pct": 6.248203921602027
   },
   "CA.PA_2026-09-17": {
     "alert_date": "2026-09-17",
