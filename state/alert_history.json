@@ -924,10 +924,10 @@
       }
     },
     "name": "Orange",
-    "price_at_alert": 13.619999885559082,
-    "score": 5.826863558688427,
+    "price_at_alert": 13.600000381469727,
+    "score": 5.915223150087293,
     "ticker": "ORA.PA",
-    "upside_announced_pct": 5.073655659272616
+    "upside_announced_pct": 5.228171905382753
   },
   "RI.PA_2026-09-21": {
     "alert_date": "2026-09-21",
@@ -1079,10 +1079,10 @@
       }
     },
     "name": "Saint-Gobain",
-    "price_at_alert": 69.33999633789062,
-    "score": 5.517007537318621,
+    "price_at_alert": 69.27999877929688,
+    "score": 5.617328028899145,
     "ticker": "SGO.PA",
-    "upside_announced_pct": 3.9323191394752435
+    "upside_announced_pct": 4.022326147518355
   },
   "STLAP.PA_2026-09-14": {
     "alert_date": "2026-09-14",
@@ -1300,6 +1300,37 @@
     "score": 5.656015469555814,
     "ticker": "URW.PA",
     "upside_announced_pct": 1.6876727639071305
+  },
+  "URW.PA_2026-09-30": {
+    "alert_date": "2026-09-30",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-07",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-28",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-11",
+        "price": null
+      }
+    },
+    "name": "Unibail-Rodamco-Westfield",
+    "price_at_alert": 89.63999938964844,
+    "score": 5.035873118145613,
+    "ticker": "URW.PA",
+    "upside_announced_pct": 3.0962901973841057
   },
   "VIE.PA_2026-09-16": {
     "alert_date": "2026-09-16",
