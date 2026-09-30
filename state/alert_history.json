@@ -1327,10 +1327,10 @@
       }
     },
     "name": "Unibail-Rodamco-Westfield",
-    "price_at_alert": 89.27999877929688,
-    "score": 5.566953273873819,
+    "price_at_alert": 89.16000366210938,
+    "score": 5.738619726162287,
     "ticker": "URW.PA",
-    "upside_announced_pct": 3.512001755443027
+    "upside_announced_pct": 3.651312368619187
   },
   "VIE.PA_2026-09-16": {
     "alert_date": "2026-09-16",
