@@ -1053,6 +1053,37 @@
     "ticker": "SGO.PA",
     "upside_announced_pct": 5.748455678668569
   },
+  "SGO.PA_2026-09-30": {
+    "alert_date": "2026-09-30",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-07",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-28",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-11",
+        "price": null
+      }
+    },
+    "name": "Saint-Gobain",
+    "price_at_alert": 69.55999755859375,
+    "score": 5.150348499870017,
+    "ticker": "SGO.PA",
+    "upside_announced_pct": 3.6036066914632827
+  },
   "STLAP.PA_2026-09-14": {
     "alert_date": "2026-09-14",
     "followups": {
