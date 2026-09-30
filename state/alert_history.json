@@ -1079,10 +1079,10 @@
       }
     },
     "name": "Saint-Gobain",
-    "price_at_alert": 69.27999877929688,
-    "score": 5.617328028899145,
+    "price_at_alert": 69.22000122070312,
+    "score": 5.735998404748959,
     "ticker": "SGO.PA",
-    "upside_announced_pct": 4.022326147518355
+    "upside_announced_pct": 4.112489185629185
   },
   "STLAP.PA_2026-09-14": {
     "alert_date": "2026-09-14",
@@ -1327,10 +1327,10 @@
       }
     },
     "name": "Unibail-Rodamco-Westfield",
-    "price_at_alert": 89.63999938964844,
-    "score": 5.035873118145613,
+    "price_at_alert": 89.27999877929688,
+    "score": 5.566953273873819,
     "ticker": "URW.PA",
-    "upside_announced_pct": 3.0962901973841057
+    "upside_announced_pct": 3.512001755443027
   },
   "VIE.PA_2026-09-16": {
     "alert_date": "2026-09-16",
