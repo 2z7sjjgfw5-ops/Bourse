@@ -1079,10 +1079,10 @@
       }
     },
     "name": "Pernod Ricard",
-    "price_at_alert": 59.18000030517578,
-    "score": 5.824811225150107,
+    "price_at_alert": 59.08000183105469,
+    "score": 6.017925223810516,
     "ticker": "RI.PA",
-    "upside_announced_pct": 3.948403952932206
+    "upside_announced_pct": 4.124346428566194
   },
   "RMS.PA_2026-10-01": {
     "alert_date": "2026-10-01",
