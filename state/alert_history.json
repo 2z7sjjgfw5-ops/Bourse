@@ -1053,6 +1053,37 @@
     "ticker": "RI.PA",
     "upside_announced_pct": 4.371678333725
   },
+  "RI.PA_2026-10-01": {
+    "alert_date": "2026-10-01",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-08",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-29",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-12",
+        "price": null
+      }
+    },
+    "name": "Pernod Ricard",
+    "price_at_alert": 59.34000015258789,
+    "score": 5.491062316695091,
+    "ticker": "RI.PA",
+    "upside_announced_pct": 3.668125410154411
+  },
   "RMS.PA_2026-10-01": {
     "alert_date": "2026-10-01",
     "followups": {
