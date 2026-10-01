@@ -1022,6 +1022,37 @@
     "ticker": "RI.PA",
     "upside_announced_pct": 4.371678333725
   },
+  "RMS.PA_2026-10-01": {
+    "alert_date": "2026-10-01",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-08",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-29",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-12",
+        "price": null
+      }
+    },
+    "name": "Hermès International",
+    "price_at_alert": 1307.5,
+    "score": 5.385762427910345,
+    "ticker": "RMS.PA",
+    "upside_announced_pct": 24.550669216061184
+  },
   "SGO.PA_2026-09-22": {
     "alert_date": "2026-09-22",
     "followups": {
@@ -1544,9 +1575,9 @@
       }
     },
     "name": "Veolia",
-    "price_at_alert": 30.270000457763672,
-    "score": 5.263284416302022,
+    "price_at_alert": 30.149999618530273,
+    "score": 5.46794278252379,
     "ticker": "VIE.PA",
-    "upside_announced_pct": 2.0482290139039225
+    "upside_announced_pct": 2.454393965110892
   }
 }
