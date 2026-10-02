@@ -158,11 +158,11 @@
     "alert_date": "2026-09-25",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -4.272468717290719,
+        "checked_date": "2026-10-02",
+        "done": true,
         "due_date": "2026-10-02",
-        "price": null
+        "price": 95.0
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -282,11 +282,11 @@
     "alert_date": "2026-09-25",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -3.692036011565626,
+        "checked_date": "2026-10-02",
+        "done": true,
         "due_date": "2026-10-02",
-        "price": null
+        "price": 106.94999694824219
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -774,6 +774,37 @@
     "ticker": "HO.PA",
     "upside_announced_pct": 7.293522923047881
   },
+  "HO.PA_2026-10-02": {
+    "alert_date": "2026-10-02",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-09",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-30",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-13",
+        "price": null
+      }
+    },
+    "name": "Thales",
+    "price_at_alert": 224.5,
+    "score": 5.160310666776972,
+    "ticker": "HO.PA",
+    "upside_announced_pct": 7.19793995132956
+  },
   "ML.PA_2026-09-30": {
     "alert_date": "2026-09-30",
     "followups": {
@@ -995,11 +1026,11 @@
     "alert_date": "2026-09-25",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": 2.6743364376927206,
+        "checked_date": "2026-10-02",
+        "done": true,
         "due_date": "2026-10-02",
-        "price": null
+        "price": 60.65999984741211
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -1176,6 +1207,37 @@
     "score": 5.867997850172436,
     "ticker": "SGO.PA",
     "upside_announced_pct": 4.232957653144947
+  },
+  "SGO.PA_2026-10-02": {
+    "alert_date": "2026-10-02",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-09",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-30",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-13",
+        "price": null
+      }
+    },
+    "name": "Saint-Gobain",
+    "price_at_alert": 69.04000091552734,
+    "score": 6.146741005381577,
+    "ticker": "SGO.PA",
+    "upside_announced_pct": 4.383930083333587
   },
   "STLAP.PA_2026-09-14": {
     "alert_date": "2026-09-14",
@@ -1424,6 +1486,37 @@
     "score": 5.738619726162287,
     "ticker": "URW.PA",
     "upside_announced_pct": 3.651312368619187
+  },
+  "URW.PA_2026-10-02": {
+    "alert_date": "2026-10-02",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-09",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-30",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-13",
+        "price": null
+      }
+    },
+    "name": "Unibail-Rodamco-Westfield",
+    "price_at_alert": 89.0999984741211,
+    "score": 6.208515370209441,
+    "ticker": "URW.PA",
+    "upside_announced_pct": 3.7949871575662244
   },
   "VIE.PA_2026-09-16": {
     "alert_date": "2026-09-16",
