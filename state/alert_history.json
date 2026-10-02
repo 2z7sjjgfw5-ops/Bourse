@@ -1208,6 +1208,37 @@
     "ticker": "RMS.PA",
     "upside_announced_pct": 6.3917723952326035
   },
+  "RNO.PA_2026-10-02": {
+    "alert_date": "2026-10-02",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-09",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-30",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-13",
+        "price": null
+      }
+    },
+    "name": "Renault",
+    "price_at_alert": 25.18000030517578,
+    "score": 5.25746827187643,
+    "ticker": "RNO.PA",
+    "upside_announced_pct": 7.601268242903196
+  },
   "SGO.PA_2026-09-22": {
     "alert_date": "2026-09-22",
     "followups": {
