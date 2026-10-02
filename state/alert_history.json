@@ -1234,10 +1234,10 @@
       }
     },
     "name": "Renault",
-    "price_at_alert": 25.139999389648438,
-    "score": 5.493440373547337,
+    "price_at_alert": 25.079999923706055,
+    "score": 5.832298206440623,
     "ticker": "RNO.PA",
-    "upside_announced_pct": 7.77247545635252
+    "upside_announced_pct": 8.030302050863698
   },
   "SGO.PA_2026-09-22": {
     "alert_date": "2026-09-22",
