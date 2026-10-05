@@ -1513,10 +1513,10 @@
       }
     },
     "name": "Saint-Gobain",
-    "price_at_alert": 66.55999755859375,
-    "score": 5.1381491093811,
+    "price_at_alert": 66.30000305175781,
+    "score": 5.650926068543179,
     "ticker": "SGO.PA",
-    "upside_announced_pct": 8.273240577804376
+    "upside_announced_pct": 8.69783253092358
   },
   "STLAP.PA_2026-09-14": {
     "alert_date": "2026-09-14",
