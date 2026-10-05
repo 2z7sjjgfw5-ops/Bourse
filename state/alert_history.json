@@ -278,6 +278,37 @@
     "ticker": "CA.PA",
     "upside_announced_pct": 3.1333087464725273
   },
+  "CA.PA_2026-10-05": {
+    "alert_date": "2026-10-05",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-12",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-02",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-16",
+        "price": null
+      }
+    },
+    "name": "Carrefour",
+    "price_at_alert": 15.324999809265137,
+    "score": 5.7948641169084,
+    "ticker": "CA.PA",
+    "upside_announced_pct": 4.061990667122107
+  },
   "DG.PA_2026-09-25": {
     "alert_date": "2026-09-25",
     "followups": {
@@ -313,11 +344,11 @@
     "alert_date": "2026-09-28",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -3.6970229194851227,
+        "checked_date": "2026-10-05",
+        "done": true,
         "due_date": "2026-10-05",
-        "price": null
+        "price": 106.80000305175781
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -499,11 +530,11 @@
     "alert_date": "2026-09-28",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -6.307545926313289,
+        "checked_date": "2026-10-05",
+        "done": true,
         "due_date": "2026-10-05",
-        "price": null
+        "price": 40.70000076293945
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -623,11 +654,11 @@
     "alert_date": "2026-09-28",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -2.691154057552229,
+        "checked_date": "2026-10-05",
+        "done": true,
         "due_date": "2026-10-05",
-        "price": null
+        "price": 22.780000686645508
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -1088,11 +1119,11 @@
     "alert_date": "2026-09-28",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -0.5429245033596067,
+        "checked_date": "2026-10-05",
+        "done": true,
         "due_date": "2026-10-05",
-        "price": null
+        "price": 58.619998931884766
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -1239,6 +1270,37 @@
     "ticker": "RMS.PA",
     "upside_announced_pct": 6.3917723952326035
   },
+  "RMS.PA_2026-10-05": {
+    "alert_date": "2026-10-05",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-12",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-02",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-16",
+        "price": null
+      }
+    },
+    "name": "Hermès International",
+    "price_at_alert": 1299.5,
+    "score": 5.5767346263143995,
+    "ticker": "RMS.PA",
+    "upside_announced_pct": 6.4736437091188925
+  },
   "RNO.PA_2026-10-02": {
     "alert_date": "2026-10-02",
     "followups": {
@@ -1269,6 +1331,37 @@
     "score": 5.832298206440623,
     "ticker": "RNO.PA",
     "upside_announced_pct": 8.030302050863698
+  },
+  "RNO.PA_2026-10-05": {
+    "alert_date": "2026-10-05",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-12",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-02",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-16",
+        "price": null
+      }
+    },
+    "name": "Renault",
+    "price_at_alert": 24.68000030517578,
+    "score": 6.3716796715670805,
+    "ticker": "RNO.PA",
+    "upside_announced_pct": 9.781196664953045
   },
   "SGO.PA_2026-09-22": {
     "alert_date": "2026-09-22",
@@ -1801,11 +1894,11 @@
     "alert_date": "2026-09-28",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -2.040169843402243,
+        "checked_date": "2026-10-05",
+        "done": true,
         "due_date": "2026-10-05",
-        "price": null
+        "price": 30.729999542236328
       },
       "4_semaines": {
         "actual_change_pct": null,
