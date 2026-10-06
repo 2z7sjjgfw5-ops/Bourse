@@ -738,10 +738,10 @@
       }
     },
     "name": "Société Générale",
-    "price_at_alert": 66.8499984741211,
-    "score": 5.243675206461326,
+    "price_at_alert": 67.3499984741211,
+    "score": 5.898407746434906,
     "ticker": "GLE.PA",
-    "upside_announced_pct": 2.982799452600916
+    "upside_announced_pct": 2.218264918185362
   },
   "HO.PA_2026-09-21": {
     "alert_date": "2026-09-21",
@@ -1916,10 +1916,10 @@
       }
     },
     "name": "Unibail-Rodamco-Westfield",
-    "price_at_alert": 89.27999877929688,
-    "score": 5.47443752617943,
+    "price_at_alert": 89.04000091552734,
+    "score": 5.953475949786581,
     "ticker": "URW.PA",
-    "upside_announced_pct": 3.5857227129030527
+    "upside_announced_pct": 3.8649270245888183
   },
   "VIE.PA_2026-09-16": {
     "alert_date": "2026-09-16",
