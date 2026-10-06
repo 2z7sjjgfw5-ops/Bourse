@@ -712,6 +712,37 @@
     "ticker": "ENGI.PA",
     "upside_announced_pct": 2.522963548864545
   },
+  "GLE.PA_2026-10-06": {
+    "alert_date": "2026-10-06",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-13",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-03",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-17",
+        "price": null
+      }
+    },
+    "name": "Société Générale",
+    "price_at_alert": 66.8499984741211,
+    "score": 5.243675206461326,
+    "ticker": "GLE.PA",
+    "upside_announced_pct": 2.982799452600916
+  },
   "HO.PA_2026-09-21": {
     "alert_date": "2026-09-21",
     "followups": {
@@ -897,6 +928,37 @@
     "score": 6.0,
     "ticker": "LR.PA",
     "upside_announced_pct": 1.2080834828995088
+  },
+  "LR.PA_2026-10-06": {
+    "alert_date": "2026-10-06",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-13",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-03",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-17",
+        "price": null
+      }
+    },
+    "name": "Legrand",
+    "price_at_alert": 145.6999969482422,
+    "score": 6.0,
+    "ticker": "LR.PA",
+    "upside_announced_pct": 1.0013584895648633
   },
   "ML.PA_2026-09-30": {
     "alert_date": "2026-09-30",
@@ -1827,6 +1889,37 @@
     "score": 6.208515370209441,
     "ticker": "URW.PA",
     "upside_announced_pct": 3.7949871575662244
+  },
+  "URW.PA_2026-10-06": {
+    "alert_date": "2026-10-06",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-13",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-03",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-17",
+        "price": null
+      }
+    },
+    "name": "Unibail-Rodamco-Westfield",
+    "price_at_alert": 89.27999877929688,
+    "score": 5.47443752617943,
+    "ticker": "URW.PA",
+    "upside_announced_pct": 3.5857227129030527
   },
   "VIE.PA_2026-09-16": {
     "alert_date": "2026-09-16",
