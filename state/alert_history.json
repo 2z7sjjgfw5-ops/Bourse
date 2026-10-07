@@ -220,11 +220,11 @@
     "alert_date": "2026-09-30",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -4.685570872269809,
+        "checked_date": "2026-10-07",
+        "done": true,
         "due_date": "2026-10-07",
-        "price": null
+        "price": 92.76000213623047
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -964,11 +964,11 @@
     "alert_date": "2026-09-30",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -1.1865847583659108,
+        "checked_date": "2026-10-07",
+        "done": true,
         "due_date": "2026-10-07",
-        "price": null
+        "price": 33.310001373291016
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -1119,11 +1119,11 @@
     "alert_date": "2026-09-30",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": 3.161759848825796,
+        "checked_date": "2026-10-07",
+        "done": true,
         "due_date": "2026-10-07",
-        "price": null
+        "price": 14.029999732971191
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -1522,11 +1522,11 @@
     "alert_date": "2026-09-30",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -4.367944272094623,
+        "checked_date": "2026-10-07",
+        "done": true,
         "due_date": "2026-10-07",
-        "price": null
+        "price": 66.12000274658203
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -1610,6 +1610,37 @@
     "score": 5.85087389634533,
     "ticker": "SGO.PA",
     "upside_announced_pct": 8.862038681877191
+  },
+  "SGO.PA_2026-10-07": {
+    "alert_date": "2026-10-07",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-14",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-04",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-18",
+        "price": null
+      }
+    },
+    "name": "Saint-Gobain",
+    "price_at_alert": 66.12000274658203,
+    "score": 5.964898506513359,
+    "ticker": "SGO.PA",
+    "upside_announced_pct": 8.99374363520017
   },
   "STLAP.PA_2026-09-14": {
     "alert_date": "2026-09-14",
@@ -1832,11 +1863,11 @@
     "alert_date": "2026-09-30",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -0.6505179533782061,
+        "checked_date": "2026-10-07",
+        "done": true,
         "due_date": "2026-10-07",
-        "price": null
+        "price": 88.58000183105469
       },
       "4_semaines": {
         "actual_change_pct": null,
