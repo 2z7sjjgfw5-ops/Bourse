@@ -1,54 +1,130 @@
 {
   "ACA.PA": {
+    "armed": true,
     "date": "2026-09-18",
+    "last_score": 3.3403014709155117,
     "score": 5.116858788782759
   },
+  "AI.PA": {
+    "armed": true,
+    "last_score": 3.8554915148936937
+  },
+  "AIR.PA": {
+    "armed": true,
+    "last_score": 2.0866964826369747
+  },
   "BN.PA": {
+    "armed": true,
     "date": "2026-09-16",
+    "last_score": 2.091244344159138,
     "score": 5.2930329505790095
   },
   "BNP.PA": {
+    "armed": true,
     "date": "2026-10-05",
+    "last_score": 3.939678013423716,
     "score": 5.311468025597511
   },
   "CA.PA": {
+    "armed": true,
     "date": "2026-10-05",
+    "last_score": 1.8613678513300953,
     "score": 5.7948641169084
   },
+  "CAP.PA": {
+    "armed": true,
+    "last_score": 2.8959451946697814
+  },
+  "CS.PA": {
+    "armed": true,
+    "last_score": 3.520756144206202
+  },
   "DG.PA": {
+    "armed": true,
     "date": "2026-09-28",
+    "last_score": 2.403503564686625,
     "score": 5.419075928400954
   },
+  "DSY.PA": {
+    "armed": true,
+    "last_score": 2.4452933465696054
+  },
+  "EDEN.PA": {
+    "armed": true,
+    "last_score": 0.3312016926360876
+  },
+  "EL.PA": {
+    "armed": true,
+    "last_score": 3.0874718976064366
+  },
   "EN.PA": {
+    "armed": true,
     "date": "2026-09-28",
+    "last_score": 2.52546148626101,
     "score": 5.459333585705327
   },
   "ENGI.PA": {
+    "armed": true,
     "date": "2026-09-28",
+    "last_score": 2.2112235144101864,
     "score": 5.249988325358473
   },
+  "ERF.PA": {
+    "armed": true,
+    "last_score": 1.0454767614514582
+  },
   "GLE.PA": {
+    "armed": true,
     "date": "2026-10-06",
+    "last_score": 2.350234761440598,
     "score": 5.898407746434906
   },
   "HO.PA": {
     "date": "2026-10-08",
     "score": 5.3
   },
+  "KER.PA": {
+    "armed": true,
+    "last_score": 2.882797357373714
+  },
   "LR.PA": {
+    "armed": true,
     "date": "2026-10-06",
+    "last_score": 1.3857575560681992,
     "score": 6.0
   },
+  "MC.PA": {
+    "armed": true,
+    "last_score": 3.3566710474891757
+  },
   "ML.PA": {
+    "armed": true,
     "date": "2026-09-30",
+    "last_score": 1.770261577614531,
     "score": 5.247904488442436
   },
+  "MT.AS": {
+    "armed": true,
+    "last_score": 1.8
+  },
+  "OR.PA": {
+    "armed": true,
+    "last_score": 1.9855639236319949
+  },
   "ORA.PA": {
+    "armed": true,
     "date": "2026-09-30",
+    "last_score": 3.0620124884287536,
     "score": 5.915223150087293
   },
+  "PUB.PA": {
+    "armed": true,
+    "last_score": 2.5549420926601387
+  },
   "RI.PA": {
+    "armed": true,
     "date": "2026-10-05",
+    "last_score": 2.9941586074166358,
     "score": 5.994773596379188
   },
   "RMS.PA": {
@@ -56,35 +132,65 @@
     "score": 5.5767346263143995
   },
   "RNO.PA": {
+    "armed": true,
     "date": "2026-10-05",
+    "last_score": 2.477163021594058,
     "score": 6.3716796715670805
+  },
+  "SAF.PA": {
+    "armed": true,
+    "last_score": 1.630242202172484
+  },
+  "SAN.PA": {
+    "armed": true,
+    "last_score": 1.300990581369307
   },
   "SGO.PA": {
     "date": "2026-10-07",
     "score": 5.964898506513359
   },
   "STLAP.PA": {
+    "armed": true,
     "date": "2026-09-14",
+    "last_score": 2.7163627004409006,
     "score": 6.1630941285177885
   },
   "STMPA.PA": {
+    "armed": true,
     "date": "2026-09-17",
+    "last_score": 2.5,
     "score": 6.144822028898831
   },
   "SU.PA": {
+    "armed": true,
     "date": "2026-10-08",
+    "last_score": 1.6110266230582329,
     "score": 5.176424689099706
   },
   "TEP.PA": {
+    "armed": true,
     "date": "2026-09-11",
+    "last_score": 1.0,
     "score": 2
   },
+  "TTE.PA": {
+    "armed": true,
+    "last_score": 0.3882977178011628
+  },
   "URW.PA": {
+    "armed": true,
     "date": "2026-10-06",
+    "last_score": 4.1295538529430305,
     "score": 5.953475949786581
   },
   "VIE.PA": {
+    "armed": true,
     "date": "2026-10-01",
+    "last_score": 3.164890418609446,
     "score": 5.471879949933929
+  },
+  "WLN.PA": {
+    "armed": true,
+    "last_score": 1.8
   }
 }
