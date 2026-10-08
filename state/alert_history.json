@@ -840,11 +840,11 @@
     "alert_date": "2026-10-01",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -0.8024980059150767,
+        "checked_date": "2026-10-08",
+        "done": true,
         "due_date": "2026-10-08",
-        "price": null
+        "price": 222.5
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -1243,11 +1243,11 @@
     "alert_date": "2026-10-01",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": 0.23696578420694717,
+        "checked_date": "2026-10-08",
+        "done": true,
         "due_date": "2026-10-08",
-        "price": null
+        "price": 59.220001220703125
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -1336,11 +1336,11 @@
     "alert_date": "2026-10-01",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": -1.9502868068833654,
+        "checked_date": "2026-10-08",
+        "done": true,
         "due_date": "2026-10-08",
-        "price": null
+        "price": 1282.0
       },
       "4_semaines": {
         "actual_change_pct": null,
@@ -1734,6 +1734,37 @@
     "score": 6.144822028898831,
     "ticker": "STMPA.PA",
     "upside_announced_pct": 4.829112349377901
+  },
+  "SU.PA_2026-10-08": {
+    "alert_date": "2026-10-08",
+    "followups": {
+      "1_semaine": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-10-15",
+        "price": null
+      },
+      "4_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-05",
+        "price": null
+      },
+      "6_semaines": {
+        "actual_change_pct": null,
+        "checked_date": null,
+        "done": false,
+        "due_date": "2026-11-19",
+        "price": null
+      }
+    },
+    "name": "Schneider Electric",
+    "price_at_alert": 260.5,
+    "score": 5.176424689099706,
+    "ticker": "SU.PA",
+    "upside_announced_pct": 6.2943232337053665
   },
   "URW.PA_2026-09-15": {
     "alert_date": "2026-09-15",
@@ -2142,11 +2173,11 @@
     "alert_date": "2026-10-01",
     "followups": {
       "1_semaine": {
-        "actual_change_pct": null,
-        "checked_date": null,
-        "done": false,
+        "actual_change_pct": 3.8436044919892622,
+        "checked_date": "2026-10-08",
+        "done": true,
         "due_date": "2026-10-08",
-        "price": null
+        "price": 31.34000015258789
       },
       "4_semaines": {
         "actual_change_pct": null,
