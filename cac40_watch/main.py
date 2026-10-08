@@ -16,10 +16,9 @@ from . import config as cfg
 from .tickers import CAC40_TICKERS
 from .data import fetch_history, fetch_fundamentals, fetch_index_history
 from . import scoring as scoring_module
-from .scoring import evaluate
 from .indicators import horizon_trading_days
 from .notify import send_notification
-from .state import load_state, save_state, should_alert, record_alert
+from .state import load_state, save_state, is_armed, rearm_if_below_threshold, disarm
 from .predictions import record_prediction
 
 
@@ -105,18 +104,30 @@ def main(argv=None):
 
     for ticker, item in collected.items():
         reference_median_pe, sector_name, sector_sample_size = _reference_for(item, sector_median, sector_count, global_median)
-        opportunity = evaluate(
+        opportunity = scoring_module.compute_opportunity(
             ticker, item["name"], item["df"], item["pe"], reference_median_pe, sector_name, sector_sample_size,
             index_df, cfg,
         )
-        if not opportunity:
+        if opportunity is None:
             continue
-        if not should_alert(alert_state, ticker, opportunity.total_score, cfg.ALERT_COOLDOWN_DAYS):
-            print(f"[info] {ticker} : signal déjà notifié récemment, pas de renvoi.")
+
+        # Réarme la valeur dès que le score repasse sous le seuil, qu'une
+        # alerte soit envoyée ou non ce run — c'est ce qui permet de ne
+        # redéclencher qu'à un nouveau franchissement (voir state.py).
+        rearm_if_below_threshold(alert_state, ticker, opportunity.total_score, cfg.SCORE_THRESHOLD)
+
+        if opportunity.total_score < cfg.SCORE_THRESHOLD:
             continue
+        if not scoring_module.families_confirm(opportunity, cfg):
+            print(f"[info] {ticker} : score au-dessus du seuil mais familles de signaux insuffisamment diversifiées, pas d'alerte.")
+            continue
+        if not is_armed(alert_state, ticker):
+            print(f"[info] {ticker} : déjà alerté pour ce franchissement de seuil, pas de renvoi.")
+            continue
+
         try:
             send_notification(opportunity, cfg)
-            record_alert(alert_state, ticker, opportunity.total_score)
+            disarm(alert_state, ticker, opportunity.total_score)
             trading_days = horizon_trading_days(opportunity.upside_pct, cfg)
             record_prediction(cfg.PREDICTIONS_CSV_FILE, opportunity, now_paris, trading_days, cfg.MARKET_LABEL)
             alerts_sent += 1

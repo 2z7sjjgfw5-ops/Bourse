@@ -112,12 +112,39 @@ WEIGHT_PER = 1.0
 # Peut être recalculé à tout moment en relançant calibrate.py.
 SCORE_THRESHOLD = 5.0
 
-ALERT_COOLDOWN_DAYS = 3          # ne pas ré-alerter sur la même valeur avant N jours
+# --- Confirmation par familles de signaux indépendantes -----------------------
+
+# Support, MACD et RSI dérivent tous les trois uniquement du prix de clôture :
+# ils peuvent bouger ensemble simplement parce que le prix a bougé, sans être
+# trois preuves réellement indépendantes. On regroupe donc les 5 signaux en 3
+# familles aux sources de données distinctes, et on exige qu'au moins
+# FAMILY_CONFIRM_MIN d'entre elles atteignent FAMILY_CONFIRM_RATIO de leur
+# score maximal avant de déclencher une alerte (le score continu sur 10 reste
+# calculé et affiché tel quel, cette condition s'ajoute par-dessus) :
+#   - "prix"         : support + MACD + RSI
+#   - "volume"       : volume anormal
+#   - "valorisation" : PER
+FAMILY_CONFIRM_RATIO = 0.5
+FAMILY_CONFIRM_MIN = 2
 
 # --- Bêta ---------------------------------------------------------------------
 
 INDEX_TICKER = "^FCHI"           # indice CAC 40 sur Yahoo Finance
 BETA_MIN_POINTS = 10             # nombre minimum de rendements hebdomadaires alignés requis
+
+# --- Cible réaliste basée sur la volatilité (ATR) ------------------------------
+
+# Le cours cible technique (résistance la plus proche) peut être très éloigné
+# du prix actuel si le seul sommet historique enregistré date de plusieurs
+# mois — statistiquement peu réaliste à court terme pour une grande valeur.
+# On calcule donc aussi un objectif basé sur la volatilité propre du titre
+# (ATR, Average True Range) et on retient le plus proche des deux cibles.
+ATR_PERIOD = 14
+# Multiplicateur appliqué à l'ATR (en % du prix) selon l'ampleur du mouvement
+# visé par la résistance technique brute — mêmes paliers que l'horizon indicatif.
+ATR_MULTIPLIER_SHORT = 1.0    # upside brut <= 3%
+ATR_MULTIPLIER_MEDIUM = 1.8   # upside brut <= 6%
+ATR_MULTIPLIER_LONG = 2.5     # upside brut > 6%
 
 # --- Suivi des prédictions (fichier CSV + tableau de bord HTML) -------------
 

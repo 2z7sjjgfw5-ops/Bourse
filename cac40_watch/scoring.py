@@ -17,6 +17,8 @@ from .indicators import (
     macd as compute_macd,
     compute_beta,
     horizon_bucket,
+    atr as compute_atr,
+    atr_multiplier,
 )
 
 
@@ -129,7 +131,17 @@ def compute_opportunity(ticker, name, df, pe, reference_median_pe, sector_name, 
 
     total_score = support_score + macd_score + rsi_score + volume_score + per_score
 
-    upside_pct = (resistance["level"] - price) / price * 100
+    # --- Cible réaliste (résistance technique plafonnée par la volatilité ATR) ---
+    raw_upside_pct = (resistance["level"] - price) / price * 100
+    atr_value = compute_atr(df, cfg.ATR_PERIOD)
+    if atr_value and atr_value > 0:
+        atr_pct = atr_value / price * 100
+        atr_upside_pct = atr_multiplier(raw_upside_pct, cfg) * atr_pct
+        upside_pct = min(raw_upside_pct, atr_upside_pct)
+    else:
+        upside_pct = raw_upside_pct
+
+    resistance_level = price * (1 + upside_pct / 100)
     horizon = horizon_bucket(upside_pct)
 
     beta = compute_beta(df, index_df, cfg.BETA_MIN_POINTS) if index_df is not None else None
@@ -141,7 +153,7 @@ def compute_opportunity(ticker, name, df, pe, reference_median_pe, sector_name, 
         support_level=support["level"],
         support_confirmations=support["confirmations"],
         support_total_windows=support["total_windows"],
-        resistance_level=resistance["level"],
+        resistance_level=resistance_level,
         upside_pct=upside_pct,
         horizon=horizon,
         rsi_value=rsi_value,
@@ -163,13 +175,38 @@ def compute_opportunity(ticker, name, df, pe, reference_median_pe, sector_name, 
     )
 
 
+def family_scores(opportunity, cfg):
+    """Regroupe les 5 signaux en 3 familles aux sources de données indépendantes :
+    "prix" (support + MACD + RSI, tous dérivés du seul cours de clôture),
+    "volume" et "valorisation" (PER). Retourne {famille: (score, score_max)}."""
+    s = opportunity.scores
+    return {
+        "prix": (s["support"] + s["macd"] + s["rsi"], cfg.WEIGHT_SUPPORT + cfg.WEIGHT_MACD + cfg.WEIGHT_RSI),
+        "volume": (s["volume"], cfg.WEIGHT_VOLUME),
+        "valorisation": (s["per"], cfg.WEIGHT_PER),
+    }
+
+
+def families_confirm(opportunity, cfg):
+    """Exige qu'au moins cfg.FAMILY_CONFIRM_MIN familles indépendantes atteignent
+    cfg.FAMILY_CONFIRM_RATIO de leur score maximal — évite qu'une seule famille
+    (typiquement "prix") ne suffise à elle seule à déclencher une alerte."""
+    families = family_scores(opportunity, cfg)
+    confirmed = sum(1 for score, max_score in families.values() if max_score > 0 and score / max_score >= cfg.FAMILY_CONFIRM_RATIO)
+    return confirmed >= cfg.FAMILY_CONFIRM_MIN
+
+
 def evaluate(ticker, name, df, pe, reference_median_pe, sector_name, sector_sample_size, index_df, cfg):
     """Comme compute_opportunity, mais retourne None si le score est sous le seuil
-    de déclenchement — c'est cette version que main.py utilise pour décider
-    d'envoyer une alerte ou non."""
+    de déclenchement ou si moins de cfg.FAMILY_CONFIRM_MIN familles de signaux
+    indépendantes ne confirment — c'est cette version que main.py utilise pour
+    décider si une valeur est actuellement "alerte-digne" (la répétition d'une
+    même alerte est ensuite gérée séparément par state.py)."""
     opportunity = compute_opportunity(
         ticker, name, df, pe, reference_median_pe, sector_name, sector_sample_size, index_df, cfg
     )
     if opportunity is None or opportunity.total_score < cfg.SCORE_THRESHOLD:
+        return None
+    if not families_confirm(opportunity, cfg):
         return None
     return opportunity

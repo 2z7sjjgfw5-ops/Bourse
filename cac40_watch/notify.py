@@ -43,7 +43,7 @@ def format_message(opp):
             f"Support proche : {opp.support_level:.2f} EUR (prix à +{distance_pct:.1f}% du support, "
             f"confirmé par {opp.support_confirmations}/{opp.support_total_windows} fenêtres)"
         ),
-        f"Résistance visée : {opp.resistance_level:.2f} EUR",
+        f"Cible visée : {opp.resistance_level:.2f} EUR",
         f"Potentiel de hausse estimé : +{opp.upside_pct:.1f}%",
         f"Horizon indicatif : {opp.horizon}",
         f"Bêta (1 an vs CAC 40) : {opp.beta:.2f}" if opp.beta is not None else "Bêta (1 an vs CAC 40) : non disponible",

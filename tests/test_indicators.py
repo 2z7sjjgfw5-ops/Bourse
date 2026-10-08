@@ -3,6 +3,7 @@
 import sys
 from datetime import date, datetime, timedelta
 from pathlib import Path
+from types import SimpleNamespace
 
 import pandas as pd
 import pytest
@@ -19,12 +20,22 @@ from cac40_watch.indicators import (
     compute_beta,
     horizon_bucket,
     horizon_trading_days,
+    atr_multiplier,
+    atr,
 )
-from cac40_watch.scoring import _linear_fraction, blended_reference_pe, compute_opportunity, evaluate
+from cac40_watch.scoring import (
+    _linear_fraction,
+    blended_reference_pe,
+    compute_opportunity,
+    evaluate,
+    family_scores,
+    families_confirm,
+)
 from cac40_watch import config as cfg
 from cac40_watch import predictions
 from cac40_watch import check_predictions
 from cac40_watch import generate_report
+from cac40_watch import state as state_module
 
 
 def make_df(closes, volumes=None, high_pad=0.5, low_pad=0.5):
@@ -358,3 +369,103 @@ def test_generate_report_classifies_rows(tmp_path):
     assert "33%" in html_content
     # Tri par date décroissante : AAA (03) avant DDD n'est pas vérifié mais doit apparaître avant BBB (02) et CCC (01)
     assert html_content.index("AAA.PA") < html_content.index("BBB.PA") < html_content.index("CCC.PA")
+
+
+# --- ATR et cible plafonnée (point 3) ------------------------------------------------------
+
+
+def test_atr_constant_true_range():
+    df = make_df([100.0] * 30, high_pad=1.0, low_pad=1.0)  # TR constant = 2.0 chaque jour
+    assert atr(df, period=14) == pytest.approx(2.0)
+
+
+def test_atr_insufficient_data_returns_none():
+    df = make_df([100.0] * 5)
+    assert atr(df, period=14) is None
+
+
+def test_atr_multiplier_matches_horizon_buckets():
+    assert atr_multiplier(2, cfg) == cfg.ATR_MULTIPLIER_SHORT
+    assert atr_multiplier(5, cfg) == cfg.ATR_MULTIPLIER_MEDIUM
+    assert atr_multiplier(10, cfg) == cfg.ATR_MULTIPLIER_LONG
+
+
+def test_compute_opportunity_caps_upside_with_atr():
+    # Résistance technique lointaine (canal haut ~109, touché plusieurs fois) suivie
+    # d'une pente monotone (donc sans extremum parasite) jusqu'à un petit canal bas
+    # à faible volatilité (~97-98, ATR minuscule) : la cible brute (~12%) doit être
+    # plafonnée très en dessous par la volatilité réelle du titre.
+    high_channel = [109.0, 108.5, 109.0, 109.3, 108.8, 109.2] * 3
+    n_decline = 40
+    decline = [108.5 - i * (108.5 - 98.0) / n_decline for i in range(n_decline)]
+    tail = [98.0, 97.3, 98.0, 98.2, 97.8, 97.6]
+    closes = high_channel + decline + tail
+    df = make_df(closes, high_pad=0.1, low_pad=0.1)
+    price = closes[-1]
+
+    levels = find_multi_window_levels(df, price, cfg.SR_WINDOWS, cfg.SR_CLUSTER_PCT, cfg.SR_CONFIRM_CLUSTER_PCT)
+    raw_upside_pct = (levels["resistance"]["level"] - price) / price * 100
+
+    atr_value = atr(df, cfg.ATR_PERIOD)
+    atr_pct = atr_value / price * 100
+    expected_atr_upside = atr_multiplier(raw_upside_pct, cfg) * atr_pct
+    expected_upside = min(raw_upside_pct, expected_atr_upside)
+
+    opp = compute_opportunity(
+        "TEST.PA", "Test SA", df, pe=None, reference_median_pe=None, sector_name="inconnu",
+        sector_sample_size=0, index_df=None, cfg=cfg,
+    )
+
+    assert opp is not None
+    assert opp.upside_pct == pytest.approx(expected_upside, rel=1e-6)
+    # Confirme que le plafond ATR joue bien un rôle ici (résistance technique nettement
+    # plus loin que ce que la volatilité du titre justifie).
+    assert opp.upside_pct < raw_upside_pct
+    assert opp.resistance_level == pytest.approx(price * (1 + opp.upside_pct / 100))
+
+
+# --- Confirmation par familles de signaux indépendantes (point 2) -------------------------
+
+
+def test_family_scores_groups_signals():
+    opp = SimpleNamespace(scores={"support": 3.0, "macd": 2.0, "rsi": 1.0, "volume": 0.5, "per": 0.2})
+    families = family_scores(opp, cfg)
+
+    assert families["prix"] == pytest.approx((6.0, cfg.WEIGHT_SUPPORT + cfg.WEIGHT_MACD + cfg.WEIGHT_RSI))
+    assert families["volume"] == pytest.approx((0.5, cfg.WEIGHT_VOLUME))
+    assert families["valorisation"] == pytest.approx((0.2, cfg.WEIGHT_PER))
+
+
+def test_families_confirm_requires_two_of_three():
+    # Famille "prix" au maximum + volume au maximum -> 2 familles sur 3 -> confirmé
+    opp_ok = SimpleNamespace(scores={
+        "support": cfg.WEIGHT_SUPPORT, "macd": cfg.WEIGHT_MACD, "rsi": cfg.WEIGHT_RSI,
+        "volume": cfg.WEIGHT_VOLUME, "per": 0.0,
+    })
+    assert families_confirm(opp_ok, cfg) is True
+
+    # Seule la famille "prix" est forte -> 1 famille sur 3 -> pas confirmé
+    opp_ko = SimpleNamespace(scores={
+        "support": cfg.WEIGHT_SUPPORT, "macd": cfg.WEIGHT_MACD, "rsi": cfg.WEIGHT_RSI,
+        "volume": 0.0, "per": 0.0,
+    })
+    assert families_confirm(opp_ko, cfg) is False
+
+
+# --- Franchissement de seuil / armement (point 1) -----------------------------------------
+
+
+def test_state_rearm_and_disarm_cycle():
+    state = {}
+    assert state_module.is_armed(state, "TEST.PA") is True
+
+    state_module.disarm(state, "TEST.PA", score=6.0)
+    assert state_module.is_armed(state, "TEST.PA") is False
+
+    # Reste désarmé tant que le score reste au-dessus du seuil
+    state_module.rearm_if_below_threshold(state, "TEST.PA", total_score=5.5, threshold=5.0)
+    assert state_module.is_armed(state, "TEST.PA") is False
+
+    # Repasse sous le seuil -> réarmé
+    state_module.rearm_if_below_threshold(state, "TEST.PA", total_score=4.0, threshold=5.0)
+    assert state_module.is_armed(state, "TEST.PA") is True

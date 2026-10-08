@@ -16,7 +16,7 @@ from collections import defaultdict
 from . import config as cfg
 from .tickers import CAC40_TICKERS
 from .data import fetch_history, fetch_fundamentals, fetch_index_history
-from .scoring import compute_opportunity, blended_reference_pe
+from .scoring import compute_opportunity, blended_reference_pe, families_confirm
 
 LOOKBACK_DAYS = 90  # nombre de jours (les plus récents) rejoués pour la calibration
 CANDIDATE_THRESHOLDS = [3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0]
@@ -102,7 +102,9 @@ def run():
     _report_sector_coverage(collected)
 
     all_scores = []
+    all_upside_pcts = []
     per_ticker_alert_days = defaultdict(int)
+    per_ticker_alert_days_confirmed = defaultdict(int)
 
     min_len = min(len(item["df"]) for item in collected.values())
     start = max(cfg.MACD_SLOW + cfg.MACD_SIGNAL + 5, min_len - LOOKBACK_DAYS)
@@ -125,9 +127,13 @@ def run():
             if opp is None:
                 continue
             all_scores.append(opp.total_score)
+            all_upside_pcts.append(opp.upside_pct)
+            confirmed = families_confirm(opp, cfg)
             for threshold in CANDIDATE_THRESHOLDS:
                 if opp.total_score >= threshold:
                     per_ticker_alert_days[(ticker, threshold)] += 1
+                    if confirmed:
+                        per_ticker_alert_days_confirmed[(ticker, threshold)] += 1
 
     if not all_scores:
         print("Aucun score calculable (support/résistance non détectés) sur la période.")
@@ -136,18 +142,35 @@ def run():
     all_scores.sort()
     n = len(all_scores)
     print(f"\n{n} scores calculés (toutes valeurs, tous jours confondus, {min_len - start} jours rejoués).")
-    print("Distribution :")
+    print("Distribution des scores :")
     for p in [50, 75, 90, 95, 99]:
         idx = min(n - 1, int(n * p / 100))
         print(f"  percentile {p:>2} : {all_scores[idx]:.2f}/10")
     print(f"  maximum observé : {all_scores[-1]:.2f}/10")
 
+    all_upside_pcts.sort()
+    m = len(all_upside_pcts)
+    print("\nDistribution du potentiel de hausse annoncé (après plafonnement ATR) :")
+    for p in [50, 75, 90, 95, 99]:
+        idx = min(m - 1, int(m * p / 100))
+        print(f"  percentile {p:>2} : +{all_upside_pcts[idx]:.1f}%")
+    print(f"  maximum observé : +{all_upside_pcts[-1]:.1f}%")
+
     weeks_covered = (min_len - start) / 5  # ~5 séances de bourse par semaine
     print("\nEstimation du nombre d'alertes par semaine, par seuil candidat :")
+    print("  (seuil seul, vs seuil + confirmation par au moins 2 familles de signaux sur 3)")
     for threshold in CANDIDATE_THRESHOLDS:
         total_alert_days = sum(v for (t, th), v in per_ticker_alert_days.items() if th == threshold)
+        total_confirmed_days = sum(v for (t, th), v in per_ticker_alert_days_confirmed.items() if th == threshold)
         per_week = total_alert_days / weeks_covered if weeks_covered else 0
-        print(f"  seuil {threshold:.1f}/10 -> ~{per_week:.1f} alertes/semaine (toutes valeurs confondues)")
+        per_week_confirmed = total_confirmed_days / weeks_covered if weeks_covered else 0
+        print(f"  seuil {threshold:.1f}/10 -> ~{per_week:.1f} alertes/semaine seules, ~{per_week_confirmed:.1f} avec confirmation")
+    print(
+        "\nNote : ces chiffres ne tiennent pas encore compte de la dé-duplication par "
+        "franchissement de seuil (point 1) — en conditions réelles, une même valeur ne "
+        "redéclenchera plus tant qu'elle reste au-dessus du seuil sans repasser en dessous, "
+        "donc la fréquence réelle sera plus basse que les estimations ci-dessus."
+    )
 
 
 if __name__ == "__main__":

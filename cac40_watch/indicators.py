@@ -222,22 +222,65 @@ def compute_beta(stock_df, index_df, min_points=10):
     return covariance / variance
 
 
+def _horizon_bucket_name(upside_pct):
+    """Palier d'ampleur du mouvement visé — unique point de vérité des seuils
+    (3% / 6%) utilisé par horizon_bucket, horizon_trading_days et atr_multiplier,
+    pour qu'ils restent toujours cohérents entre eux."""
+    if upside_pct <= 3:
+        return "short"
+    if upside_pct <= 6:
+        return "medium"
+    return "long"
+
+
 def horizon_bucket(upside_pct):
     """Horizon indicatif basé sur l'ampleur du mouvement visé (heuristique simple)."""
-    if upside_pct <= 3:
-        return "d'ici la fin de la semaine (environ 5 séances de bourse)"
-    if upside_pct <= 6:
-        return "sous 2 à 3 semaines"
-    return "sous 4 à 6 semaines"
+    return {
+        "short": "d'ici la fin de la semaine (environ 5 séances de bourse)",
+        "medium": "sous 2 à 3 semaines",
+        "long": "sous 4 à 6 semaines",
+    }[_horizon_bucket_name(upside_pct)]
 
 
 def horizon_trading_days(upside_pct, cfg):
     """Nombre de séances de bourse correspondant à horizon_bucket, pour calculer
-    une échéance précise (voir config.HORIZON_DAYS_*). Mêmes seuils que
-    horizon_bucket, afin que le texte de l'alerte et l'échéance du suivi des
-    prédictions restent toujours cohérents entre eux."""
-    if upside_pct <= 3:
-        return cfg.HORIZON_DAYS_SHORT
-    if upside_pct <= 6:
-        return cfg.HORIZON_DAYS_MEDIUM
-    return cfg.HORIZON_DAYS_LONG
+    une échéance précise (voir config.HORIZON_DAYS_*)."""
+    return {
+        "short": cfg.HORIZON_DAYS_SHORT,
+        "medium": cfg.HORIZON_DAYS_MEDIUM,
+        "long": cfg.HORIZON_DAYS_LONG,
+    }[_horizon_bucket_name(upside_pct)]
+
+
+def atr_multiplier(upside_pct, cfg):
+    """Multiplicateur d'ATR correspondant au même palier (voir config.ATR_MULTIPLIER_*)."""
+    return {
+        "short": cfg.ATR_MULTIPLIER_SHORT,
+        "medium": cfg.ATR_MULTIPLIER_MEDIUM,
+        "long": cfg.ATR_MULTIPLIER_LONG,
+    }[_horizon_bucket_name(upside_pct)]
+
+
+def atr(df, period=14):
+    """Average True Range (ATR) : mesure de volatilité propre à chaque valeur,
+    lissée selon la méthode de Wilder (comme le RSI)."""
+    highs = df["High"].tolist()
+    lows = df["Low"].tolist()
+    closes = df["Close"].tolist()
+    if len(closes) < period + 1:
+        return None
+
+    true_ranges = []
+    for i in range(1, len(closes)):
+        true_ranges.append(
+            max(
+                highs[i] - lows[i],
+                abs(highs[i] - closes[i - 1]),
+                abs(lows[i] - closes[i - 1]),
+            )
+        )
+
+    atr_value = sum(true_ranges[:period]) / period
+    for tr in true_ranges[period:]:
+        atr_value = (atr_value * (period - 1) + tr) / period
+    return atr_value
