@@ -47,13 +47,19 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python -m cac40_watch.main ${{ github.event.inputs.force == 'true' && '--force' || '' }}
 
-      - name: Sauvegarde de l'historique des alertes
+      - name: Vérification des prédictions arrivées à échéance
+        run: python -m cac40_watch.check_predictions
+
+      - name: Génération du tableau de bord de suivi
+        run: python -m cac40_watch.generate_report
+
+      - name: Sauvegarde de l'état et du suivi des prédictions
         run: |
-          if [ -n "$(git status --porcelain state/)" ]; then
+          if [ -n "$(git status --porcelain state/ docs/)" ]; then
             git config user.name "cac40-monitor-bot"
             git config user.email "actions@users.noreply.github.com"
-            git add state/
-            git commit -m "Mise à jour de l'historique des alertes"
+            git add state/ docs/
+            git commit -m "Mise à jour de l'état et du suivi des prédictions"
             git push
           else
             echo "Aucun changement d'état à sauvegarder."

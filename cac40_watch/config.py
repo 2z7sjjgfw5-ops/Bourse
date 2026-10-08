@@ -119,10 +119,28 @@ ALERT_COOLDOWN_DAYS = 3          # ne pas ré-alerter sur la même valeur avant 
 INDEX_TICKER = "^FCHI"           # indice CAC 40 sur Yahoo Finance
 BETA_MIN_POINTS = 10             # nombre minimum de rendements hebdomadaires alignés requis
 
-# --- Historique de suivi des alertes -----------------------------------------
+# --- Suivi des prédictions (fichier CSV + tableau de bord HTML) -------------
 
-ALERT_HISTORY_FILE = "state/alert_history.json"
-FOLLOWUP_WEEKS = [1, 4, 6]       # échéances de revérification du prix après une alerte
+MARKET_LABEL = "CAC40"           # colonne "marché" du CSV ; à adapter quand un autre marché sera ajouté
+PREDICTIONS_CSV_FILE = "state/predictions.csv"
+PREDICTIONS_REPORT_FILE = "docs/index.html"
+
+# Horizon indicatif (horizon_bucket) converti en nombre de séances de bourse,
+# pour calculer une échéance précise (date) : on retient la borne haute de
+# chaque fourchette annoncée, par prudence avant de juger un objectif "non atteint".
+HORIZON_DAYS_SHORT = 5     # "d'ici la fin de la semaine"
+HORIZON_DAYS_MEDIUM = 15   # "sous 2 à 3 semaines"
+HORIZON_DAYS_LONG = 30     # "sous 4 à 6 semaines"
+
+# Fenêtre (en jours calendaires) dans laquelle on cherche une séance de bourse
+# réelle à partir de l'échéance prévue, pour aller chercher le cours de ce jour-là.
+ECHEANCE_LOOKAHEAD_DAYS = 10
+
+# Dans le tableau de bord, un résultat est classé "de justesse" (orange) si le
+# pourcentage réellement atteint représente entre 90% et 110% du pourcentage
+# prédit — que ce soit un objectif tout juste manqué ou tout juste dépassé.
+JUSTESSE_RATIO_LOW = 0.90
+JUSTESSE_RATIO_HIGH = 1.10
 
 # --- Fonctionnement -----------------------------------------------------------
 

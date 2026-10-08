@@ -1,0 +1,990 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suivi des prédictions — Veille CAC 40</title>
+<style>
+  :root {
+    --bg: #f7f7f5;
+    --card-bg: #ffffff;
+    --text: #1f2430;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --vert: #d9f0df;
+    --vert-text: #1e6b3a;
+    --rouge: #fbdede;
+    --rouge-text: #9c2a2a;
+    --orange: #fbe8d2;
+    --orange-text: #9a5b13;
+    --attente-bg: #f0f0f0;
+    --attente-text: #6b7280;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px 48px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  .subtitle { color: var(--muted); margin: 0 0 24px; font-size: 0.9rem; }
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    min-width: 150px;
+    flex: 1;
+  }
+  .stat-value { font-size: 1.6rem; font-weight: 600; }
+  .stat-label { color: var(--muted); font-size: 0.8rem; margin-top: 2px; }
+  .table-container {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow-x: auto;
+  }
+  table { border-collapse: collapse; width: 100%; font-size: 0.85rem; white-space: nowrap; }
+  th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.02em; }
+  tr:last-child td { border-bottom: none; }
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .pill-atteint { background: var(--vert); color: var(--vert-text); }
+  .pill-manque { background: var(--rouge); color: var(--rouge-text); }
+  .pill-justesse { background: var(--orange); color: var(--orange-text); }
+  .pill-attente { background: var(--attente-bg); color: var(--attente-text); }
+  .footer { color: var(--muted); font-size: 0.78rem; margin-top: 20px; }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15171c;
+      --card-bg: #1d2027;
+      --text: #e8e9ec;
+      --muted: #9aa0ab;
+      --border: #2d313a;
+      --vert: #1c3b28; --vert-text: #8fd9a8;
+      --rouge: #3e2020; --rouge-text: #f0a3a3;
+      --orange: #3d2e15; --orange-text: #f0c57e;
+      --attente-bg: #2a2d34; --attente-text: #9aa0ab;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Suivi des prédictions — Veille CAC 40</h1>
+  <p class="subtitle">Mis à jour automatiquement à chaque exécution du système. Dernière génération : 2026-10-08 10:09 UTC.</p>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-value">—</div>
+      <div class="stat-label">Taux de réussite (objectifs atteints)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">0</div>
+      <div class="stat-label">Prédictions vérifiées</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">71</div>
+      <div class="stat-label">En attente d'échéance</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">71</div>
+      <div class="stat-label">Total enregistré</div>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Date alerte</th>
+          <th>Marché</th>
+          <th>Valeur</th>
+          <th>Cours départ</th>
+          <th>% prédit</th>
+          <th>Cours cible</th>
+          <th>Échéance</th>
+          <th>Cours réel</th>
+          <th>Écart réel</th>
+          <th>Résultat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2026-10-08 00:00</td>
+          <td>CAC40</td>
+          <td>Schneider Electric (SU.PA)</td>
+          <td>260.50 €</td>
+          <td>+6.3%</td>
+          <td>276.90 €</td>
+          <td>2026-11-19</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-07 00:00</td>
+          <td>CAC40</td>
+          <td>Saint-Gobain (SGO.PA)</td>
+          <td>66.12 €</td>
+          <td>+9.0%</td>
+          <td>72.07 €</td>
+          <td>2026-11-18</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-06 00:00</td>
+          <td>CAC40</td>
+          <td>Société Générale (GLE.PA)</td>
+          <td>67.35 €</td>
+          <td>+2.2%</td>
+          <td>68.84 €</td>
+          <td>2026-10-13</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-06 00:00</td>
+          <td>CAC40</td>
+          <td>Legrand (LR.PA)</td>
+          <td>145.70 €</td>
+          <td>+1.0%</td>
+          <td>147.16 €</td>
+          <td>2026-10-13</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-06 00:00</td>
+          <td>CAC40</td>
+          <td>Unibail-Rodamco-Westfield (URW.PA)</td>
+          <td>89.04 €</td>
+          <td>+3.9%</td>
+          <td>92.48 €</td>
+          <td>2026-10-27</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-05 00:00</td>
+          <td>CAC40</td>
+          <td>BNP Paribas (BNP.PA)</td>
+          <td>91.58 €</td>
+          <td>+0.4%</td>
+          <td>91.97 €</td>
+          <td>2026-10-12</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-05 00:00</td>
+          <td>CAC40</td>
+          <td>Carrefour (CA.PA)</td>
+          <td>15.32 €</td>
+          <td>+4.1%</td>
+          <td>15.95 €</td>
+          <td>2026-10-26</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-05 00:00</td>
+          <td>CAC40</td>
+          <td>Pernod Ricard (RI.PA)</td>
+          <td>58.78 €</td>
+          <td>+4.7%</td>
+          <td>61.53 €</td>
+          <td>2026-10-26</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-05 00:00</td>
+          <td>CAC40</td>
+          <td>Hermès International (RMS.PA)</td>
+          <td>1299.50 €</td>
+          <td>+6.5%</td>
+          <td>1383.62 €</td>
+          <td>2026-11-16</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-05 00:00</td>
+          <td>CAC40</td>
+          <td>Renault (RNO.PA)</td>
+          <td>24.68 €</td>
+          <td>+9.8%</td>
+          <td>27.09 €</td>
+          <td>2026-11-16</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-05 00:00</td>
+          <td>CAC40</td>
+          <td>Saint-Gobain (SGO.PA)</td>
+          <td>66.20 €</td>
+          <td>+8.9%</td>
+          <td>72.07 €</td>
+          <td>2026-11-16</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-02 00:00</td>
+          <td>CAC40</td>
+          <td>Thales (HO.PA)</td>
+          <td>224.50 €</td>
+          <td>+7.2%</td>
+          <td>240.66 €</td>
+          <td>2026-11-13</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-02 00:00</td>
+          <td>CAC40</td>
+          <td>Legrand (LR.PA)</td>
+          <td>145.60 €</td>
+          <td>+1.2%</td>
+          <td>147.36 €</td>
+          <td>2026-10-09</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-02 00:00</td>
+          <td>CAC40</td>
+          <td>Pernod Ricard (RI.PA)</td>
+          <td>58.84 €</td>
+          <td>+4.5%</td>
+          <td>61.52 €</td>
+          <td>2026-10-23</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-02 00:00</td>
+          <td>CAC40</td>
+          <td>Hermès International (RMS.PA)</td>
+          <td>1300.50 €</td>
+          <td>+6.4%</td>
+          <td>1383.62 €</td>
+          <td>2026-11-13</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-02 00:00</td>
+          <td>CAC40</td>
+          <td>Renault (RNO.PA)</td>
+          <td>25.08 €</td>
+          <td>+8.0%</td>
+          <td>27.09 €</td>
+          <td>2026-11-13</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-02 00:00</td>
+          <td>CAC40</td>
+          <td>Saint-Gobain (SGO.PA)</td>
+          <td>69.04 €</td>
+          <td>+4.4%</td>
+          <td>72.07 €</td>
+          <td>2026-10-23</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-02 00:00</td>
+          <td>CAC40</td>
+          <td>Unibail-Rodamco-Westfield (URW.PA)</td>
+          <td>89.10 €</td>
+          <td>+3.8%</td>
+          <td>92.48 €</td>
+          <td>2026-10-23</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-01 00:00</td>
+          <td>CAC40</td>
+          <td>Thales (HO.PA)</td>
+          <td>224.30 €</td>
+          <td>+7.3%</td>
+          <td>240.66 €</td>
+          <td>2026-11-12</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-01 00:00</td>
+          <td>CAC40</td>
+          <td>Pernod Ricard (RI.PA)</td>
+          <td>59.08 €</td>
+          <td>+4.1%</td>
+          <td>61.52 €</td>
+          <td>2026-10-22</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-01 00:00</td>
+          <td>CAC40</td>
+          <td>Hermès International (RMS.PA)</td>
+          <td>1307.50 €</td>
+          <td>+24.6%</td>
+          <td>1628.50 €</td>
+          <td>2026-11-12</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-10-01 00:00</td>
+          <td>CAC40</td>
+          <td>Veolia (VIE.PA)</td>
+          <td>30.18 €</td>
+          <td>+2.4%</td>
+          <td>30.89 €</td>
+          <td>2026-10-08</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-30 00:00</td>
+          <td>CAC40</td>
+          <td>BNP Paribas (BNP.PA)</td>
+          <td>97.32 €</td>
+          <td>+0.0%</td>
+          <td>97.35 €</td>
+          <td>2026-10-07</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-30 00:00</td>
+          <td>CAC40</td>
+          <td>Michelin (ML.PA)</td>
+          <td>33.71 €</td>
+          <td>+3.1%</td>
+          <td>34.75 €</td>
+          <td>2026-10-21</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-30 00:00</td>
+          <td>CAC40</td>
+          <td>Orange (ORA.PA)</td>
+          <td>13.60 €</td>
+          <td>+5.2%</td>
+          <td>14.31 €</td>
+          <td>2026-10-21</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-30 00:00</td>
+          <td>CAC40</td>
+          <td>Saint-Gobain (SGO.PA)</td>
+          <td>69.14 €</td>
+          <td>+4.2%</td>
+          <td>72.07 €</td>
+          <td>2026-10-21</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-30 00:00</td>
+          <td>CAC40</td>
+          <td>Unibail-Rodamco-Westfield (URW.PA)</td>
+          <td>89.16 €</td>
+          <td>+3.7%</td>
+          <td>92.42 €</td>
+          <td>2026-10-21</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-29 00:00</td>
+          <td>CAC40</td>
+          <td>BNP Paribas (BNP.PA)</td>
+          <td>97.59 €</td>
+          <td>+6.2%</td>
+          <td>103.69 €</td>
+          <td>2026-11-10</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-28 00:00</td>
+          <td>CAC40</td>
+          <td>Vinci (DG.PA)</td>
+          <td>110.90 €</td>
+          <td>+2.6%</td>
+          <td>113.74 €</td>
+          <td>2026-10-05</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-28 00:00</td>
+          <td>CAC40</td>
+          <td>Bouygues (EN.PA)</td>
+          <td>43.44 €</td>
+          <td>+0.8%</td>
+          <td>43.79 €</td>
+          <td>2026-10-05</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-28 00:00</td>
+          <td>CAC40</td>
+          <td>Engie (ENGI.PA)</td>
+          <td>23.41 €</td>
+          <td>+2.5%</td>
+          <td>24.00 €</td>
+          <td>2026-10-05</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-28 00:00</td>
+          <td>CAC40</td>
+          <td>Pernod Ricard (RI.PA)</td>
+          <td>58.94 €</td>
+          <td>+4.4%</td>
+          <td>61.52 €</td>
+          <td>2026-10-19</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-28 00:00</td>
+          <td>CAC40</td>
+          <td>Veolia (VIE.PA)</td>
+          <td>31.37 €</td>
+          <td>+3.4%</td>
+          <td>32.43 €</td>
+          <td>2026-10-19</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-25 00:00</td>
+          <td>CAC40</td>
+          <td>BNP Paribas (BNP.PA)</td>
+          <td>99.24 €</td>
+          <td>+4.5%</td>
+          <td>103.69 €</td>
+          <td>2026-10-16</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-25 00:00</td>
+          <td>CAC40</td>
+          <td>Vinci (DG.PA)</td>
+          <td>111.05 €</td>
+          <td>+2.4%</td>
+          <td>113.74 €</td>
+          <td>2026-10-02</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-25 00:00</td>
+          <td>CAC40</td>
+          <td>Pernod Ricard (RI.PA)</td>
+          <td>59.08 €</td>
+          <td>+4.1%</td>
+          <td>61.52 €</td>
+          <td>2026-10-16</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-24 00:00</td>
+          <td>CAC40</td>
+          <td>Engie (ENGI.PA)</td>
+          <td>23.42 €</td>
+          <td>+2.5%</td>
+          <td>24.00 €</td>
+          <td>2026-10-01</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-23 00:00</td>
+          <td>CAC40</td>
+          <td>Bouygues (EN.PA)</td>
+          <td>43.49 €</td>
+          <td>+0.7%</td>
+          <td>43.79 €</td>
+          <td>2026-09-30</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-23 00:00</td>
+          <td>CAC40</td>
+          <td>Thales (HO.PA)</td>
+          <td>235.80 €</td>
+          <td>+2.1%</td>
+          <td>240.76 €</td>
+          <td>2026-09-30</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-23 00:00</td>
+          <td>CAC40</td>
+          <td>Unibail-Rodamco-Westfield (URW.PA)</td>
+          <td>93.62 €</td>
+          <td>+1.7%</td>
+          <td>95.20 €</td>
+          <td>2026-09-30</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-23 00:00</td>
+          <td>CAC40</td>
+          <td>Veolia (VIE.PA)</td>
+          <td>31.54 €</td>
+          <td>+2.9%</td>
+          <td>32.46 €</td>
+          <td>2026-09-30</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-22 00:00</td>
+          <td>CAC40</td>
+          <td>BNP Paribas (BNP.PA)</td>
+          <td>100.74 €</td>
+          <td>+3.0%</td>
+          <td>103.72 €</td>
+          <td>2026-09-29</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-22 00:00</td>
+          <td>CAC40</td>
+          <td>Thales (HO.PA)</td>
+          <td>235.80 €</td>
+          <td>+1.7%</td>
+          <td>239.87 €</td>
+          <td>2026-09-29</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-22 00:00</td>
+          <td>CAC40</td>
+          <td>Orange (ORA.PA)</td>
+          <td>15.03 €</td>
+          <td>+4.4%</td>
+          <td>15.70 €</td>
+          <td>2026-10-13</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-22 00:00</td>
+          <td>CAC40</td>
+          <td>Saint-Gobain (SGO.PA)</td>
+          <td>69.12 €</td>
+          <td>+5.7%</td>
+          <td>73.09 €</td>
+          <td>2026-10-13</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-22 00:00</td>
+          <td>CAC40</td>
+          <td>Unibail-Rodamco-Westfield (URW.PA)</td>
+          <td>93.12 €</td>
+          <td>+2.3%</td>
+          <td>95.26 €</td>
+          <td>2026-09-29</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-22 00:00</td>
+          <td>CAC40</td>
+          <td>Veolia (VIE.PA)</td>
+          <td>31.57 €</td>
+          <td>+2.8%</td>
+          <td>32.46 €</td>
+          <td>2026-09-29</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-21 00:00</td>
+          <td>CAC40</td>
+          <td>Bouygues (EN.PA)</td>
+          <td>43.53 €</td>
+          <td>+0.6%</td>
+          <td>43.79 €</td>
+          <td>2026-09-28</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-21 00:00</td>
+          <td>CAC40</td>
+          <td>Engie (ENGI.PA)</td>
+          <td>23.50 €</td>
+          <td>+2.1%</td>
+          <td>24.00 €</td>
+          <td>2026-09-28</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-21 00:00</td>
+          <td>CAC40</td>
+          <td>Thales (HO.PA)</td>
+          <td>235.90 €</td>
+          <td>+1.7%</td>
+          <td>239.87 €</td>
+          <td>2026-09-28</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-21 00:00</td>
+          <td>CAC40</td>
+          <td>Orange (ORA.PA)</td>
+          <td>15.88 €</td>
+          <td>+1.1%</td>
+          <td>16.05 €</td>
+          <td>2026-09-28</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-21 00:00</td>
+          <td>CAC40</td>
+          <td>Pernod Ricard (RI.PA)</td>
+          <td>59.04 €</td>
+          <td>+4.7%</td>
+          <td>61.80 €</td>
+          <td>2026-10-12</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-21 00:00</td>
+          <td>CAC40</td>
+          <td>Veolia (VIE.PA)</td>
+          <td>31.61 €</td>
+          <td>+2.7%</td>
+          <td>32.46 €</td>
+          <td>2026-09-28</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-18 00:00</td>
+          <td>CAC40</td>
+          <td>Crédit Agricole (ACA.PA)</td>
+          <td>18.23 €</td>
+          <td>+0.8%</td>
+          <td>18.38 €</td>
+          <td>2026-09-25</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-18 00:00</td>
+          <td>CAC40</td>
+          <td>BNP Paribas (BNP.PA)</td>
+          <td>100.32 €</td>
+          <td>+3.4%</td>
+          <td>103.72 €</td>
+          <td>2026-10-09</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-18 00:00</td>
+          <td>CAC40</td>
+          <td>Bouygues (EN.PA)</td>
+          <td>43.61 €</td>
+          <td>+0.4%</td>
+          <td>43.79 €</td>
+          <td>2026-09-25</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-18 00:00</td>
+          <td>CAC40</td>
+          <td>Unibail-Rodamco-Westfield (URW.PA)</td>
+          <td>93.64 €</td>
+          <td>+1.7%</td>
+          <td>95.26 €</td>
+          <td>2026-09-25</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-18 00:00</td>
+          <td>CAC40</td>
+          <td>Veolia (VIE.PA)</td>
+          <td>31.56 €</td>
+          <td>+2.9%</td>
+          <td>32.49 €</td>
+          <td>2026-09-25</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-17 00:00</td>
+          <td>CAC40</td>
+          <td>Carrefour (CA.PA)</td>
+          <td>16.91 €</td>
+          <td>+3.1%</td>
+          <td>17.45 €</td>
+          <td>2026-10-08</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-17 00:00</td>
+          <td>CAC40</td>
+          <td>Orange (ORA.PA)</td>
+          <td>15.95 €</td>
+          <td>+0.7%</td>
+          <td>16.05 €</td>
+          <td>2026-09-24</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-17 00:00</td>
+          <td>CAC40</td>
+          <td>STMicroelectronics (STMPA.PA)</td>
+          <td>42.42 €</td>
+          <td>+4.8%</td>
+          <td>44.47 €</td>
+          <td>2026-10-08</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-16 00:00</td>
+          <td>CAC40</td>
+          <td>Danone (BN.PA)</td>
+          <td>60.94 €</td>
+          <td>+4.4%</td>
+          <td>63.62 €</td>
+          <td>2026-10-07</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-16 00:00</td>
+          <td>CAC40</td>
+          <td>Orange (ORA.PA)</td>
+          <td>15.87 €</td>
+          <td>+1.2%</td>
+          <td>16.05 €</td>
+          <td>2026-09-23</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-16 00:00</td>
+          <td>CAC40</td>
+          <td>Veolia (VIE.PA)</td>
+          <td>31.62 €</td>
+          <td>+2.5%</td>
+          <td>32.42 €</td>
+          <td>2026-09-23</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-15 00:00</td>
+          <td>CAC40</td>
+          <td>BNP Paribas (BNP.PA)</td>
+          <td>100.34 €</td>
+          <td>+3.4%</td>
+          <td>103.71 €</td>
+          <td>2026-10-06</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-15 00:00</td>
+          <td>CAC40</td>
+          <td>Bouygues (EN.PA)</td>
+          <td>43.51 €</td>
+          <td>+0.6%</td>
+          <td>43.79 €</td>
+          <td>2026-09-22</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-15 00:00</td>
+          <td>CAC40</td>
+          <td>Engie (ENGI.PA)</td>
+          <td>23.41 €</td>
+          <td>+2.3%</td>
+          <td>23.96 €</td>
+          <td>2026-09-22</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-15 00:00</td>
+          <td>CAC40</td>
+          <td>Unibail-Rodamco-Westfield (URW.PA)</td>
+          <td>93.62 €</td>
+          <td>+1.8%</td>
+          <td>95.26 €</td>
+          <td>2026-09-22</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-14 00:00</td>
+          <td>CAC40</td>
+          <td>Bouygues (EN.PA)</td>
+          <td>43.57 €</td>
+          <td>+0.5%</td>
+          <td>43.79 €</td>
+          <td>2026-09-21</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-14 00:00</td>
+          <td>CAC40</td>
+          <td>Stellantis (STLAP.PA)</td>
+          <td>4.61 €</td>
+          <td>+4.1%</td>
+          <td>4.80 €</td>
+          <td>2026-10-05</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+        <tr>
+          <td>2026-09-14 00:00</td>
+          <td>CAC40</td>
+          <td>STMicroelectronics (STMPA.PA)</td>
+          <td>42.44 €</td>
+          <td>+4.8%</td>
+          <td>44.47 €</td>
+          <td>2026-10-05</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill pill-attente">En attente</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="footer">
+    Rappel : ces résultats mesurent uniquement la performance technique du système d'alertes,
+    ce n'est ni un conseil financier ni une garantie pour l'avenir.
+  </p>
+</div>
+</body>
+</html>

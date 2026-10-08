@@ -9,7 +9,7 @@ import statistics
 import sys
 import time
 from collections import defaultdict
-from datetime import date, datetime
+from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from . import config as cfg
@@ -17,9 +17,10 @@ from .tickers import CAC40_TICKERS
 from .data import fetch_history, fetch_fundamentals, fetch_index_history
 from . import scoring as scoring_module
 from .scoring import evaluate
+from .indicators import horizon_trading_days
 from .notify import send_notification
 from .state import load_state, save_state, should_alert, record_alert
-from . import history as history_module
+from .predictions import record_prediction
 
 
 def is_market_hours(now=None):
@@ -79,26 +80,6 @@ def _reference_for(item, sector_median, sector_count, global_median):
     return reference, (sector or "inconnu"), n
 
 
-def _process_followups(collected, hist, today=None):
-    """Revérifie automatiquement le prix des alertes dont une échéance (1/4/6 semaines) est atteinte."""
-    for alert_id, entry, followup_key in history_module.due_followups(hist, today):
-        ticker = entry["ticker"]
-        price_now = None
-        if ticker in collected:
-            price_now = float(collected[ticker]["df"]["Close"].iloc[-1])
-        else:
-            try:
-                df = fetch_history(ticker, period="5d")
-                if df is not None and not df.empty:
-                    price_now = float(df["Close"].iloc[-1])
-            except Exception as exc:
-                print(f"[avertissement] {ticker} : échec de la revérification de prix ({exc})")
-        if price_now is None:
-            continue
-        history_module.apply_followup(hist, alert_id, followup_key, price_now)
-        print(f"[suivi] {ticker} : échéance '{followup_key}' renseignée ({price_now:.2f} EUR).")
-
-
 def main(argv=None):
     argv = argv if argv is not None else sys.argv[1:]
     force = "--force" in argv
@@ -119,9 +100,8 @@ def main(argv=None):
     sector_median, sector_count, global_median = _compute_reference_medians(collected)
 
     alert_state = load_state(cfg.STATE_FILE)
-    alert_hist = load_state(cfg.ALERT_HISTORY_FILE)
     alerts_sent = 0
-    today = date.today()
+    now_paris = datetime.now(ZoneInfo("Europe/Paris"))
 
     for ticker, item in collected.items():
         reference_median_pe, sector_name, sector_sample_size = _reference_for(item, sector_median, sector_count, global_median)
@@ -137,16 +117,14 @@ def main(argv=None):
         try:
             send_notification(opportunity, cfg)
             record_alert(alert_state, ticker, opportunity.total_score)
-            history_module.record_alert(alert_hist, opportunity, today, cfg.FOLLOWUP_WEEKS)
+            trading_days = horizon_trading_days(opportunity.upside_pct, cfg)
+            record_prediction(cfg.PREDICTIONS_CSV_FILE, opportunity, now_paris, trading_days, cfg.MARKET_LABEL)
             alerts_sent += 1
             print(f"[alerte] Notification envoyée pour {ticker} (score {opportunity.total_score:.1f}/10).")
         except Exception as exc:
             print(f"[erreur] Échec d'envoi de la notification pour {ticker} : {exc}")
 
-    _process_followups(collected, alert_hist, today)
-
     save_state(cfg.STATE_FILE, alert_state)
-    save_state(cfg.ALERT_HISTORY_FILE, alert_hist)
     print(f"Analyse terminée : {len(collected)} valeur(s) analysée(s), {alerts_sent} alerte(s) envoyée(s).")
 
 

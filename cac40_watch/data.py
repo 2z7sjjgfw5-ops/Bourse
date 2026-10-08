@@ -23,3 +23,9 @@ def fetch_fundamentals(ticker):
 def fetch_index_history(ticker, period="1y"):
     """Historique quotidien d'un indice (ex. ^FCHI pour le CAC 40), utilisé pour le bêta."""
     return yf.Ticker(ticker).history(period=period, interval="1d", auto_adjust=False)
+
+
+def fetch_history_range(ticker, start, end):
+    """Historique quotidien entre deux dates précises (utilisé pour retrouver le cours
+    réel à une échéance passée)."""
+    return yf.Ticker(ticker).history(start=start, end=end, interval="1d", auto_adjust=False)

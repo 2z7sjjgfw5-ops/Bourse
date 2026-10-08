@@ -46,10 +46,13 @@ ce script. L'alerte indique aussi :
 Une même valeur n'est pas ré-notifiée plus d'une fois tous les 3 jours, sauf
 si le score se renforce entre-temps.
 
-Chaque alerte envoyée est aussi enregistrée dans `state/alert_history.json` :
-le programme revérifie automatiquement le prix réel 1, 4 et 6 semaines après
-chaque alerte, pour permettre de calculer à terme un taux de réussite réel du
-système — entièrement automatique, aucune action de votre part.
+Chaque alerte envoyée est aussi enregistrée dans `state/predictions.csv`
+(date, cours de départ, % prédit, cours cible, échéance). Une fois
+l'échéance passée, le programme va chercher automatiquement le cours réel à
+cette date et complète la ligne (cours atteint, écart réel, objectif atteint
+ou non) — sans aucune action de votre part. Un tableau de bord lisible est
+généré à chaque passage dans `docs/index.html` (voir la section "Tableau de
+bord de suivi" plus bas pour le consulter en ligne).
 
 Tous les poids et seuils sont modifiables dans `cac40_watch/config.py`.
 
@@ -138,6 +141,31 @@ ordinateur.
 - **Fréquence** : modifiable dans
   `.github/workflows/cac40_monitor.yml` (ligne `cron`).
 
+## Tableau de bord de suivi des prédictions
+
+Chaque alerte est enregistrée dans `state/predictions.csv`, puis vérifiée
+automatiquement une fois son échéance passée. Une page HTML lisible
+(`docs/index.html`) est régénérée à chaque passage, avec un tableau trié du
+plus récent au plus ancien, un code couleur (vert = objectif atteint, rouge =
+manqué, orange = de justesse) et le taux de réussite global.
+
+### Pour la consulter en ligne (5 minutes, une seule fois)
+
+1. Ouvrez ce dépôt sur github.com → **Settings** → dans le menu de gauche,
+   **Pages**.
+2. Dans la section **Build and deployment**, choisissez **Source : Deploy
+   from a branch**.
+3. Sous **Branch**, sélectionnez `claude/cac-40-monitoring-system-uz0ypf`
+   et le dossier **/docs**, puis cliquez sur **Save**.
+4. Après une minute ou deux, une adresse publique apparaît en haut de cette
+   même page (de la forme `https://2z7sjjgfw5-ops.github.io/Bourse/`) :
+   c'est votre tableau de bord, qui se met à jour tout seul à chaque
+   exécution du système.
+
+⚠️ Cette page est **publique** (n'importe qui connaissant l'adresse peut la
+consulter), comme le reste de ce dépôt — elle ne contient que des analyses
+techniques et des cours de bourse, aucune information personnelle.
+
 ## Fournisseurs de notification alternatifs
 
 Vous pouvez utiliser Pushover ou Telegram à la place de ntfy en ajoutant les
@@ -177,6 +205,9 @@ défaut.
 - GitHub peut désactiver automatiquement les tâches planifiées (`cron`) d'un
   dépôt resté inactif plus de 60 jours ; il suffit de relancer manuellement
   (étape 5) pour les réactiver.
+- L'échéance d'une prédiction est calculée en jours ouvrés simples (sans
+  tenir compte des jours fériés de la Bourse de Paris) : une marge de
+  quelques jours est possible autour des périodes de fermeture exceptionnelle.
 
 ## Pour aller plus loin (optionnel)
 

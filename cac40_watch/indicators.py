@@ -229,3 +229,15 @@ def horizon_bucket(upside_pct):
     if upside_pct <= 6:
         return "sous 2 à 3 semaines"
     return "sous 4 à 6 semaines"
+
+
+def horizon_trading_days(upside_pct, cfg):
+    """Nombre de séances de bourse correspondant à horizon_bucket, pour calculer
+    une échéance précise (voir config.HORIZON_DAYS_*). Mêmes seuils que
+    horizon_bucket, afin que le texte de l'alerte et l'échéance du suivi des
+    prédictions restent toujours cohérents entre eux."""
+    if upside_pct <= 3:
+        return cfg.HORIZON_DAYS_SHORT
+    if upside_pct <= 6:
+        return cfg.HORIZON_DAYS_MEDIUM
+    return cfg.HORIZON_DAYS_LONG

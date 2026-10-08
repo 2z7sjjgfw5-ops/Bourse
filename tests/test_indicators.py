@@ -1,7 +1,7 @@
 """Tests avec des données synthétiques (aucun accès réseau requis)."""
 
 import sys
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 import pandas as pd
@@ -18,10 +18,13 @@ from cac40_watch.indicators import (
     macd,
     compute_beta,
     horizon_bucket,
+    horizon_trading_days,
 )
 from cac40_watch.scoring import _linear_fraction, blended_reference_pe, compute_opportunity, evaluate
 from cac40_watch import config as cfg
-from cac40_watch import history as history_module
+from cac40_watch import predictions
+from cac40_watch import check_predictions
+from cac40_watch import generate_report
 
 
 def make_df(closes, volumes=None, high_pad=0.5, low_pad=0.5):
@@ -265,52 +268,93 @@ def test_evaluate_none_below_threshold():
     assert result is None
 
 
-# --- historique de suivi ---------------------------------------------------------------------
+# --- horizon en jours de bourse (pour l'échéance des prédictions) --------------------------
+
+
+def test_horizon_trading_days_matches_horizon_bucket_thresholds():
+    assert horizon_trading_days(2, cfg) == cfg.HORIZON_DAYS_SHORT
+    assert horizon_trading_days(5, cfg) == cfg.HORIZON_DAYS_MEDIUM
+    assert horizon_trading_days(10, cfg) == cfg.HORIZON_DAYS_LONG
+
+
+# --- suivi des prédictions (CSV) ------------------------------------------------------------
 
 
 class _FakeOpportunity:
-    def __init__(self, ticker, name, price, total_score, upside_pct):
+    def __init__(self, ticker, name, price, upside_pct, resistance_level):
         self.ticker = ticker
         self.name = name
         self.price = price
-        self.total_score = total_score
         self.upside_pct = upside_pct
+        self.resistance_level = resistance_level
 
 
-def test_history_record_and_due_followups():
-    hist = {}
-    alert_date = date(2024, 1, 1)
-    opp = _FakeOpportunity("TEST.PA", "Test SA", price=100.0, total_score=6.5, upside_pct=5.0)
-
-    alert_id = history_module.record_alert(hist, opp, alert_date, followup_weeks=[1, 4, 6])
-
-    assert alert_id in hist
-    assert hist[alert_id]["followups"]["1_semaine"]["due_date"] == (alert_date + timedelta(weeks=1)).isoformat()
-
-    # Rien n'est dû juste après l'alerte
-    assert history_module.due_followups(hist, today=alert_date) == []
-
-    # Une semaine plus tard, l'échéance à 1 semaine est due (pas les autres)
-    due = history_module.due_followups(hist, today=alert_date + timedelta(weeks=1))
-    assert len(due) == 1
-    assert due[0][2] == "1_semaine"
+def test_compute_echeance_skips_weekends():
+    # Vendredi 2024-01-05 + 1 séance de bourse -> lundi 2024-01-08 (pas samedi).
+    assert predictions.compute_echeance(date(2024, 1, 5), 1) == date(2024, 1, 8)
 
 
-def test_history_apply_followup_computes_change():
-    hist = {}
-    alert_date = date(2024, 1, 1)
-    opp = _FakeOpportunity("TEST.PA", "Test SA", price=100.0, total_score=6.5, upside_pct=5.0)
-    alert_id = history_module.record_alert(hist, opp, alert_date, followup_weeks=[1, 4, 6])
+def test_record_and_read_prediction(tmp_path):
+    csv_path = str(tmp_path / "predictions.csv")
+    opp = _FakeOpportunity("TEST.PA", "Test SA", price=100.0, upside_pct=5.0, resistance_level=105.0)
+    alert_dt = datetime(2024, 1, 2, 10, 30)
 
-    history_module.apply_followup(hist, alert_id, "1_semaine", price_now=105.0, checked_date=alert_date + timedelta(weeks=1))
+    predictions.record_prediction(csv_path, opp, alert_dt, trading_days=5, market_label="CAC40")
+    rows = predictions.read_rows(csv_path)
 
-    followup = hist[alert_id]["followups"]["1_semaine"]
-    assert followup["done"] is True
-    assert followup["actual_change_pct"] == pytest.approx(5.0)
+    assert len(rows) == 1
+    row = rows[0]
+    assert row["ticker"] == "TEST.PA"
+    assert row["marche"] == "CAC40"
+    assert float(row["cours_depart"]) == pytest.approx(100.0)
+    assert float(row["cours_cible"]) == pytest.approx(105.0)
+    assert row["cours_reel_echeance"] == ""
 
-    # Une fois traitée, elle ne doit plus apparaître comme due
-    due = history_module.due_followups(hist, today=alert_date + timedelta(weeks=6))
-    keys_due = [key for _, _, key in due]
-    assert "1_semaine" not in keys_due
-    assert "4_semaines" in keys_due
-    assert "6_semaines" in keys_due
+
+def test_check_predictions_is_due():
+    row_due = {"echeance_prevue": "2024-01-01", "cours_reel_echeance": ""}
+    row_not_yet = {"echeance_prevue": "2099-01-01", "cours_reel_echeance": ""}
+    row_already_done = {"echeance_prevue": "2024-01-01", "cours_reel_echeance": "12.0"}
+
+    today = date(2024, 6, 1)
+    assert check_predictions._is_due(row_due, today) is True
+    assert check_predictions._is_due(row_not_yet, today) is False
+    assert check_predictions._is_due(row_already_done, today) is False
+
+
+def test_generate_report_classifies_rows(tmp_path):
+    csv_path = str(tmp_path / "predictions.csv")
+    output_path = str(tmp_path / "report.html")
+    rows = [
+        # Objectif largement atteint -> vert
+        {"horodatage_alerte": "2024-01-03 10:00", "marche": "CAC40", "ticker": "AAA.PA", "nom": "A SA",
+         "cours_depart": "100", "pourcentage_predit": "5.0", "cours_cible": "105", "echeance_prevue": "2024-01-10",
+         "cours_reel_echeance": "110", "ecart_reel_pct": "10.0", "objectif_atteint": "Oui"},
+        # Objectif manqué nettement -> rouge
+        {"horodatage_alerte": "2024-01-02 10:00", "marche": "CAC40", "ticker": "BBB.PA", "nom": "B SA",
+         "cours_depart": "100", "pourcentage_predit": "5.0", "cours_cible": "105", "echeance_prevue": "2024-01-09",
+         "cours_reel_echeance": "100", "ecart_reel_pct": "0.0", "objectif_atteint": "Non"},
+        # Manqué de peu -> orange
+        {"horodatage_alerte": "2024-01-01 10:00", "marche": "CAC40", "ticker": "CCC.PA", "nom": "C SA",
+         "cours_depart": "100", "pourcentage_predit": "5.0", "cours_cible": "105", "echeance_prevue": "2024-01-08",
+         "cours_reel_echeance": "104.8", "ecart_reel_pct": "4.8", "objectif_atteint": "Non"},
+        # Encore en attente
+        {"horodatage_alerte": "2024-01-04 10:00", "marche": "CAC40", "ticker": "DDD.PA", "nom": "D SA",
+         "cours_depart": "100", "pourcentage_predit": "5.0", "cours_cible": "105", "echeance_prevue": "2099-01-01",
+         "cours_reel_echeance": "", "ecart_reel_pct": "", "objectif_atteint": ""},
+    ]
+    predictions.write_rows(csv_path, rows)
+
+    generate_report.generate(csv_path=csv_path, output_path=output_path)
+
+    with open(output_path, encoding="utf-8") as f:
+        html_content = f.read()
+
+    assert "pill-atteint" in html_content
+    assert "pill-manque" in html_content
+    assert "pill-justesse" in html_content
+    assert "pill-attente" in html_content
+    # 1 atteint sur 3 vérifiées (AAA Oui, BBB Non, CCC Non) -> 33%
+    assert "33%" in html_content
+    # Tri par date décroissante : AAA (03) avant DDD n'est pas vérifié mais doit apparaître avant BBB (02) et CCC (01)
+    assert html_content.index("AAA.PA") < html_content.index("BBB.PA") < html_content.index("CCC.PA")
