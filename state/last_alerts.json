@@ -1,8 +1,8 @@
 {
   "ACA.PA": {
-    "armed": true,
-    "date": "2026-11-05",
-    "last_score": 4.992072623726585
+    "armed": false,
+    "date": "2026-11-12",
+    "last_score": 5.207457464889062
   },
   "AI.PA": {
     "armed": true,
@@ -10,27 +10,27 @@
   },
   "AIR.PA": {
     "armed": true,
-    "last_score": 2.5
+    "last_score": 2.8398904336044533
   },
   "BN.PA": {
     "armed": true,
     "date": "2026-09-16",
-    "last_score": 4.239116805491716,
+    "last_score": 2.5,
     "score": 5.2930329505790095
   },
   "BNP.PA": {
     "armed": true,
     "date": "2026-10-30",
-    "last_score": 3.149377543062161
+    "last_score": 3.1479254213681105
   },
   "CA.PA": {
     "armed": true,
     "date": "2026-11-10",
-    "last_score": 4.016260098037225
+    "last_score": 3.9530709240453294
   },
   "CAP.PA": {
     "armed": true,
-    "last_score": 3.215487837533108
+    "last_score": 0.6905708500470957
   },
   "CS.PA": {
     "armed": true,
@@ -39,7 +39,7 @@
   "DG.PA": {
     "armed": true,
     "date": "2026-11-06",
-    "last_score": 3.4071402841314047
+    "last_score": 3.3375254219335178
   },
   "DSY.PA": {
     "armed": true,
@@ -47,7 +47,7 @@
   },
   "EDEN.PA": {
     "armed": true,
-    "last_score": 4.4884393766081665
+    "last_score": 4.590287008954356
   },
   "EL.PA": {
     "armed": true,
@@ -56,32 +56,32 @@
   "EN.PA": {
     "armed": true,
     "date": "2026-10-30",
-    "last_score": 2.5271295484443
+    "last_score": 4.421299513607115
   },
   "ENGI.PA": {
     "armed": true,
     "date": "2026-09-28",
-    "last_score": 2.71992650930825,
+    "last_score": 2.691110148397361,
     "score": 5.249988325358473
   },
   "ERF.PA": {
     "armed": true,
-    "last_score": 0.17461736227198676
+    "last_score": 0.13419559685106802
   },
   "GLE.PA": {
     "armed": true,
     "date": "2026-11-10",
-    "last_score": 3.1678101696645875
+    "last_score": 3.1678939399103454
   },
   "HO.PA": {
     "armed": true,
     "date": "2026-10-08",
-    "last_score": 0.5337457176764022,
+    "last_score": 2.2688559303340012,
     "score": 5.3
   },
   "KER.PA": {
     "armed": true,
-    "last_score": 3.3358933416059253
+    "last_score": 3.451887001222762
   },
   "LR.PA": {
     "armed": true,
@@ -91,7 +91,7 @@
   },
   "MC.PA": {
     "armed": true,
-    "last_score": 2.5
+    "last_score": 2.434075644275287
   },
   "ML.PA": {
     "armed": false,
@@ -104,12 +104,12 @@
   },
   "OR.PA": {
     "armed": true,
-    "last_score": 0.559212710002463
+    "last_score": 0.9491608360128726
   },
   "ORA.PA": {
-    "armed": false,
+    "armed": true,
     "date": "2026-11-05",
-    "last_score": 5.473734317506599
+    "last_score": 4.307149904326717
   },
   "PUB.PA": {
     "armed": true,
@@ -118,7 +118,7 @@
   "RI.PA": {
     "armed": true,
     "date": "2026-10-05",
-    "last_score": 2.31829944424806,
+    "last_score": 1.9285480016213472,
     "score": 5.994773596379188
   },
   "RMS.PA": {
@@ -128,13 +128,13 @@
     "score": 5.5767346263143995
   },
   "RNO.PA": {
-    "armed": false,
+    "armed": true,
     "date": "2026-11-11",
-    "last_score": 5.1009238024227965
+    "last_score": 3.5
   },
   "SAF.PA": {
     "armed": true,
-    "last_score": 3.443016107092432
+    "last_score": 3.698041403731108
   },
   "SAN.PA": {
     "armed": true,
@@ -143,40 +143,40 @@
   "SGO.PA": {
     "armed": true,
     "date": "2026-11-10",
-    "last_score": 3.612814046516701
+    "last_score": 3.3866900024719477
   },
   "STLAP.PA": {
     "armed": true,
     "date": "2026-09-14",
-    "last_score": 0.6899168037987462,
+    "last_score": 4.55802692067189,
     "score": 6.1630941285177885
   },
   "STMPA.PA": {
     "armed": true,
     "date": "2026-09-17",
-    "last_score": 0.09480899656149142,
+    "last_score": 1.701376219418301,
     "score": 6.144822028898831
   },
   "SU.PA": {
     "armed": true,
     "date": "2026-10-08",
-    "last_score": 2.981242377619985,
+    "last_score": 2.888290109887689,
     "score": 5.176424689099706
   },
   "TEP.PA": {
     "armed": true,
     "date": "2026-09-11",
-    "last_score": 1.6153728865891392,
+    "last_score": 1.7149971510282802,
     "score": 2
   },
   "TTE.PA": {
     "armed": true,
-    "last_score": 1.3475957380693675
+    "last_score": 0.8178115054780899
   },
   "URW.PA": {
     "armed": true,
     "date": "2026-11-03",
-    "last_score": 4.081145642061406
+    "last_score": 3.904707780841596
   },
   "VIE.PA": {
     "armed": true,
@@ -186,6 +186,6 @@
   },
   "WLN.PA": {
     "armed": true,
-    "last_score": 2.5
+    "last_score": 2.8352749706892406
   }
 }
